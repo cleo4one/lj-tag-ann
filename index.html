@@ -8,11 +8,10 @@
     <!-- Web App Meta Tags for iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <!-- UPDATED: Web App name for home screen -->
     <meta name="apple-mobile-web-app-title" content="LJ TAG Ann.">
     <meta name="theme-color" content="#e5e7eb"> <!-- Default background color -->
 
-    <!-- UPDATED: App Icon and Favicon using properly encoded SVG Data URI -->
+    <!-- App Icon and Favicon using properly encoded SVG Data URI -->
     <link rel="apple-touch-icon" href="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23BED600'/%3E%3Ctext x='90' y='85' font-family='Arial, Helvetica, sans-serif' font-size='40' font-weight='bold' text-anchor='middle' fill='%23ffffff'%3ELJ TAG%3C/text%3E%3Ctext x='90' y='125' font-family='Arial, Helvetica, sans-serif' font-size='32' font-weight='bold' text-anchor='middle' fill='%23ffffff'%3EAnn.%3C/text%3E%3C/svg%3E">
     <link rel="icon" href="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23BED600'/%3E%3Ctext x='90' y='85' font-family='Arial, Helvetica, sans-serif' font-size='40' font-weight='bold' text-anchor='middle' fill='%23ffffff'%3ELJ TAG%3C/text%3E%3Ctext x='90' y='125' font-family='Arial, Helvetica, sans-serif' font-size='32' font-weight='bold' text-anchor='middle' fill='%23ffffff'%3EAnn.%3C/text%3E%3C/svg%3E">
 
@@ -570,7 +569,7 @@
                                 <input type="text" class="name-input hour-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Hour" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                 <span>시</span>
                                 <input type="text" class="name-input minute-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Min" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                                <span>분 입니다.</span>
+                                <span>분 경 입니다.</span>
                              </div>
                              <div class="flex justify-end items-center mt-2">
                                  <div class="flex items-center space-x-2">
@@ -607,7 +606,7 @@
                                 <input type="text" class="name-input hour-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Hour" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                 <span>시</span>
                                 <input type="text" class="name-input minute-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Min" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                                <span>분 입니다.</span>
+                                <span>분 경 입니다.</span>
                              </div>
                              <div class="flex justify-end items-center mt-2">
                                  <div class="flex items-center space-x-2">
@@ -1145,7 +1144,7 @@
                                         const repeatCount = parseInt(broadcastItem.dataset.repeatCount, 10) || 1;
                                         const timeString = `${hour}시 ${minute}분`;
                                         const repeatedTime = Array(repeatCount).fill(timeString).join(', ');
-                                        textToRead = `${part1} ${repeatedTime} 입니다. ${part2}`;
+                                        textToRead = `${part1} ${repeatedTime} 경 입니다. ${part2}`;
                                     
                                     } else { 
                                         const part1 = parentContainer.querySelector('.script-text-part1').textContent;
