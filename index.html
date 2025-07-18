@@ -931,9 +931,9 @@
                     const option = document.createElement('option');
                     option.textContent = `${voice.name}`;
                     option.value = voice.name;
-                    if (voice.lang.startsWith('ko')) {
+                    if (voice.lang.toLowerCase().includes('ko')) {
                         voiceSelectKo.appendChild(option);
-                    } else if (voice.lang.startsWith('en-')) {
+                    } else if (voice.lang.toLowerCase().includes('en')) {
                         voiceSelectEn.appendChild(option);
                     }
                 });
