@@ -194,7 +194,7 @@
                                 </svg>
                             </button>
                             <div id="ko-voice-tooltip" class="hidden absolute z-20 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">
-                                • Recommended<br>&nbsp;&nbsp;- iOS: Yuna(2nd)<br>&nbsp;&nbsp;- Android : English (United States) > Voice I
+                                • Recommended<br>&nbsp;&nbsp;- iOS: Yuna(2nd)<br>&nbsp;&nbsp;- Android : Korean (South Korea) > Voice I
                                 <div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div>
                             </div>
                         </div>
@@ -1334,7 +1334,7 @@
                                         const repeatedName = Array(nameRepeatCount).fill(namePart).join(', ');
                                         const repeatedGate = Array(gateRepeatCount).fill(gatePart + '번').join(', ');
                                         
-                                        textToRead = `${part1} ${repeatedName} ${part2} ${repeatedGate}${part3.substring(1)}`;
+                                        textToRead = `${part1} ${repeatedName}, ${part2} ${repeatedGate} ${part3.substring(1).trim()}`;
 
                                     } else if (broadcastItem.id === 'broadcast-10') {
                                         const part1 = parentContainer.querySelector('.script-text-part1').textContent;
