@@ -1325,8 +1325,8 @@
                                             return;
                                         }
                                         
-                                        const nameRepeatContainer = parentContainer.querySelector('.name-input-container:first-of-type');
-                                        const gateRepeatContainer = parentContainer.querySelector('.name-input-container:last-of-type');
+                                        const nameRepeatContainer = parentContainer.querySelector('.name-input-container:nth-of-type(1)');
+                                        const gateRepeatContainer = parentContainer.querySelector('.name-input-container:nth-of-type(2)');
 
                                         const nameRepeatCount = parseInt(nameRepeatContainer.dataset.repeatCount, 10) || 1;
                                         const gateRepeatCount = parseInt(gateRepeatContainer.dataset.repeatCount, 10) || 1;
@@ -1425,14 +1425,11 @@
             });
             
             document.querySelectorAll('.broadcast-item').forEach(item => {
-                if(item.querySelector('.name-input-container')) {
-                    const minusBtn = item.querySelector('.btn-repeat-minus');
-                    const plusBtn = item.querySelector('.btn-repeat-plus');
-                    const countDisplay = item.querySelector('.repeat-count');
-                    const container = minusBtn.closest('.name-input-container');
-                    
-                    if(!container.dataset.repeatCount) container.dataset.repeatCount = '2';
-
+                const repeatContainers = item.querySelectorAll('.name-input-container[data-repeat-count]');
+                repeatContainers.forEach(container => {
+                    const minusBtn = container.querySelector('.btn-repeat-minus');
+                    const plusBtn = container.querySelector('.btn-repeat-plus');
+                    const countDisplay = container.querySelector('.repeat-count');
 
                     if(minusBtn && plusBtn && countDisplay) {
                         minusBtn.addEventListener('click', (e) => {
@@ -1453,7 +1450,7 @@
                             countDisplay.textContent = count;
                         });
                     }
-                }
+                });
             });
 
             document.querySelectorAll('.btn-translate').forEach(btn => {
