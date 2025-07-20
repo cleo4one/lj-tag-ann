@@ -159,7 +159,7 @@
         </svg>
     </div>
     <!-- Header with background animations -->
-    <header id="controls-header" class="fixed top-0 left-0 right-0 z-20">
+    <header id="controls-header" class="fixed top-0 left-0 right-0 z-40">
         <!-- Background Layer with SVGs -->
         <div class="absolute inset-0 bg-white/80 backdrop-blur-sm shadow-md overflow-hidden">
             <svg id="background-clouds" xmlns="http://www.w3.org/2000/svg">
@@ -270,7 +270,7 @@
             <div id="broadcast-1" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">#1 Final Call for Check-in (No names)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="flex items-start">
@@ -295,7 +295,7 @@
             <div id="broadcast-2" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">#2 Final Call for Check-in (With names)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -343,9 +343,10 @@
             </div>
             <!-- Broadcast #3 -->
             <div id="broadcast-3" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                    <span class="font-bold text-sm text-gray-700">#3 Baggage Inspection Call</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#3 Baggage Inspection Call</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 512 512\' fill=\'%23000000\'%3E%3Cg%3E%3Cpath d=\'M350.263,142.507c-2.584-2.584-5.355-4.866-8.258-6.879c-0.218-0.172-0.446-0.329-0.679-0.473 c-23.331-15.711-55.337-13.268-75.959,7.353c-17.689,17.688-22,43.758-12.95,65.544c0.126,0.358,0.273,0.71,0.456,1.051 c2.91,6.643,7.064,12.87,12.495,18.3c11.703,11.703,27.076,17.554,42.448,17.554c15.373,0,30.746-5.852,42.448-17.554 C373.669,203.996,373.669,165.912,350.263,142.507z M263.488,192.551c-2.363-13.903,1.797-28.709,12.507-39.418 c8.775-8.774,20.296-13.16,31.822-13.16c5.442,0,10.88,0.991,16.033,2.948L263.488,192.551z M275.993,216.776 c-2.819-2.819-5.179-5.925-7.092-9.22l68.603-56.407c0.726,0.638,1.441,1.292,2.133,1.985c2.463,2.463,4.568,5.149,6.339,7.985 l-68.921,56.668C276.7,217.452,276.341,217.123,275.993,216.776z M339.637,216.777c-13.326,13.326-32.994,16.52-49.374,9.605 l61.579-50.631C354.822,190.11,350.76,205.654,339.637,216.777z\'/%3E%3C/g%3E%3Cg%3E%3Cpath d=\'M462.962,308.403l-81.684-81.684c7.184-12.59,11.03-26.878,11.03-41.765c0-22.569-8.789-43.786-24.748-59.745 c-23.215-23.215-56.683-30.047-85.957-20.543c-9.854-6.215-20.789-10.291-32.182-12.048V37.478h15.103 c4.15,0,7.514-3.364,7.514-7.514V7.514c0-4.15-3.364-7.514-7.514-7.514H103.742c-4.15,0-7.514,3.364-7.514,7.514v22.449 c0,4.15,3.364,7.514,7.514,7.514h15.103V92.6c-40.718,6.231-72.008,41.492-72.008,83.924v236.174 c0,21.821,17.753,39.575,39.575,39.575h12.649c-1.848,3.602-2.898,7.677-2.898,11.997v21.354 c0,14.544,11.833,26.377,26.378,26.377c14.544,0,26.377-11.833,26.377-26.377v-21.354c0-4.319-1.05-8.395-2.897-11.997h76.228 c-1.847,3.602-2.897,7.677-2.897,11.997v21.354c0,14.544,11.833,26.377,26.378,26.377c14.544,0,26.377-11.833,26.377-26.377 v-21.354c0-4.319-1.05-8.395-2.898-11.997h12.649c21.821,0,39.575-17.753,39.575-39.575v-144.41 c9.768-1.583,19.305-4.879,28.131-9.892l81.704,81.704c1.409,1.41,3.32,2.201,5.313,2.201c1.993,0,3.904-0.792,5.313-2.201 l21.071-21.071C465.896,316.096,465.896,311.338,462.962,308.403z M111.256,22.449v-7.421h145.756v7.421h-15.103h-22.449H148.81 h-22.45H111.256z M234.394,37.478v54.144h-7.421V37.478H234.394z M211.945,37.478v54.144h-55.621V37.478H211.945z M141.296,37.478 v54.144h-7.422V37.478H141.296z M133.89,485.623c0,6.258-5.092,11.348-11.348,11.348c-6.258,0-11.349-5.092-11.349-11.348v-21.354 c0-6.258,5.092-11.348,11.349-11.348s11.348,5.092,11.348,11.348V485.623z M257.077,485.623L257.077,485.623 c-0.001,6.258-5.093,11.348-11.349,11.348c-6.258,0-11.348-5.092-11.348-11.348v-21.354c0-6.258,5.092-11.348,11.349-11.348 s11.348,5.092,11.348,11.348V485.623z M306.402,412.698c0,13.534-11.012,24.546-24.546,24.546H86.412 c-13.534,0-24.546-11.012-24.546-24.546V176.524c0-38.529,31.345-69.874,69.874-69.874h17.07h70.649h17.069 c9.641,0,19.098,2.006,27.846,5.839c-5.813,3.484-11.298,7.717-16.303,12.72c-32.943,32.943-32.943,86.546,0,119.489 c2.852,2.852,5.869,5.441,9.004,7.8v136.86c0,4.15,3.364,7.514,7.514,7.514s7.514-3.364,7.514-7.514V261.532 c10.848,5.047,22.556,7.647,34.298,7.842V412.698z M258.698,234.072c-27.084-27.084-27.084-71.152,0-98.236 c13.543-13.542,31.33-20.312,49.118-20.312c17.788,0,35.576,6.771,49.119,20.313c13.12,13.12,20.345,30.564,20.345,49.118 s-7.226,35.998-20.345,49.118C329.85,261.155,285.782,261.155,258.698,234.072z M436.578,324.161l-74.24-74.24l10.444-10.444 l74.24,74.24L436.578,324.161z\'/%3E%3C/g%3E%3Cg%3E%3Cpath d=\'M103.678,169.111c-4.15,0-7.514,3.364-7.514,7.514v212.734c0,4.15,3.364,7.514,7.514,7.514 c4.15,0,7.514-3.364,7.514-7.514V176.625C111.192,172.474,107.827,169.111,103.678,169.111z\'/%3E%3C/g%3E%3Cg%3E%3Cpath d=\'M157.315,169.111c-4.15,0-7.514,3.364-7.514,7.514v212.734c0,4.15,3.364,7.514,7.514,7.514s7.514-3.364,7.514-7.514 V176.625C164.829,172.474,161.466,169.111,157.315,169.111z\'/%3E%3C/g%3E%3Cg%3E%3Cpath d=\'M210.953,169.111c-4.15,0-7.514,3.364-7.514,7.514v212.734c0,4.15,3.364,7.514,7.514,7.514 c4.15,0,7.514-3.364,7.514-7.514V176.625C218.467,172.474,215.103,169.111,210.953,169.111z\'/%3E%3C/g%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform relative z-10 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                      <div class="script-input-area space-y-3">
@@ -395,7 +396,7 @@
             <div id="broadcast-4" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">#4 Congested, please proceed to IMMG now</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="flex items-start">
@@ -420,7 +421,7 @@
             <div id="broadcast-5" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">#5 Pre-BRDG (PAX who need assistance)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="flex items-start">
@@ -445,7 +446,7 @@
             <div id="broadcast-6" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">#6 Commence Boarding (General)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -485,7 +486,7 @@
             <div id="broadcast-7" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">#7 In the middle of Boarding</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -525,7 +526,7 @@
             <div id="broadcast-8" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">#8 Final Call for Boarding</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -565,7 +566,7 @@
             <div id="broadcast-9" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">#9 Final Call for Boarding (With Name)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -627,7 +628,7 @@
             <div id="broadcast-10" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">#10 Gate CHG to #1~#7</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -672,7 +673,7 @@
             <div id="broadcast-11" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">#11 Gate CHG to #8 (Lower floor of Gate #7)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="flex items-start">
@@ -701,7 +702,7 @@ Once again, the new boarding gate is Gate 8 on the first floor. Please wait near
             <div id="broadcast-12" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">#12 Carrying Power Banks Onboard Regulations (KR)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <p class="script-text text-sm leading-relaxed text-gray-600">진에어에서 안내 말씀드리겠습니다. 항공기 탑승 후 보조배터리와 전자담배를 충전하거나, 기내 선반에 보관하는 것은 엄격히 금지되어 있습니다. 반드시 직접 휴대하거나 좌석 앞 주머니에 보관해 주시기 바랍니다. 감사합니다.</p>
@@ -718,7 +719,7 @@ Once again, the new boarding gate is Gate 8 on the first floor. Please wait near
             <div id="broadcast-13" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">#13 Carrying Power Banks Onboard Regulations (EN)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <p class="script-text text-sm leading-relaxed text-gray-600">Your attention please. This is an announcement from Jin Air. Please be advised that charging a power bank or electronic cigarettes, as well as storing them in the overhead compartments, is strictly prohibited once on board. You must keep these items on your person at all times or store them in the seat pocket in front of you. Thank you for your cooperation.</p>
@@ -735,7 +736,7 @@ Once again, the new boarding gate is Gate 8 on the first floor. Please wait near
             <div id="broadcast-14" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">#14 FLT DLY - Due to A/C CONX (1st, In the middle of disembarkation)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -784,7 +785,7 @@ Thank you for your understanding.<div class="absolute bottom-full left-4 -transl
             <div id="broadcast-15" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">#15 FLT DLY - Due to A/C CONX (2nd, In the middle of cabin preparation)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -835,7 +836,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
         <div id="broadcast-freeform" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
             <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                 <span class="font-bold text-sm text-gray-700">Free Form</span>
-                <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </h3>
             <div class="broadcast-content p-4 border-t border-gray-200">
                 <div id="custom-input-section">
@@ -920,9 +921,9 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
             <div id="user-guide-homescreen" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">
-                        Home Screen Icon for Quick Access (<svg class="inline-block align-middle w-5 h-5 mx-0.5" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M 44.527344 34.75 C 43.449219 37.144531 42.929688 38.214844 41.542969 40.328125 C 39.601563 43.28125 36.863281 46.96875 33.480469 46.992188 C 30.46875 47.019531 29.691406 45.027344 25.601563 45.0625 C 21.515625 45.082031 20.664063 47.03125 17.648438 47 C 14.261719 46.96875 11.671875 43.648438 9.730469 40.699219 C 4.300781 32.429688 3.726563 22.734375 7.082031 17.578125 C 9.457031 13.921875 13.210938 11.773438 16.738281 11.773438 C 20.332031 11.773438 22.589844 13.746094 25.558594 13.746094 C 28.441406 13.746094 30.195313 11.769531 34.351563 11.769531 C 37.492188 11.769531 40.8125 13.480469 43.1875 16.433594 C 35.421875 20.691406 36.683594 31.78125 44.527344 34.75 Z M 31.195313 8.46875 C 32.707031 6.527344 33.855469 3.789063 33.4375 1 C 30.972656 1.167969 28.089844 2.742188 26.40625 4.78125 C 24.878906 6.640625 23.613281 9.398438 24.105469 12.066406 C 26.796875 12.152344 29.582031 10.546875 31.195313 8.46875 Z"/></svg>iOS)
+                        Home Screen Icon for Quick Access<span class="inline-flex items-baseline whitespace-nowrap ml-1">(<svg class="inline-block align-middle w-5 h-5 mx-0.5" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M 44.527344 34.75 C 43.449219 37.144531 42.929688 38.214844 41.542969 40.328125 C 39.601563 43.28125 36.863281 46.96875 33.480469 46.992188 C 30.46875 47.019531 29.691406 45.027344 25.601563 45.0625 C 21.515625 45.082031 20.664063 47.03125 17.648438 47 C 14.261719 46.96875 11.671875 43.648438 9.730469 40.699219 C 4.300781 32.429688 3.726563 22.734375 7.082031 17.578125 C 9.457031 13.921875 13.210938 11.773438 16.738281 11.773438 C 20.332031 11.773438 22.589844 13.746094 25.558594 13.746094 C 28.441406 13.746094 30.195313 11.769531 34.351563 11.769531 C 37.492188 11.769531 40.8125 13.480469 43.1875 16.433594 C 35.421875 20.691406 36.683594 31.78125 44.527344 34.75 Z M 31.195313 8.46875 C 32.707031 6.527344 33.855469 3.789063 33.4375 1 C 30.972656 1.167969 28.089844 2.742188 26.40625 4.78125 C 24.878906 6.640625 23.613281 9.398438 24.105469 12.066406 C 26.796875 12.152344 29.582031 10.546875 31.195313 8.46875 Z"/></svg>iOS)</span>
                     </span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                      <div class="text-left">
@@ -940,9 +941,9 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
             <div id="user-guide-ios" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
                     <span class="font-bold text-sm text-gray-700">
-                        How to Change Voice Model (<svg class="inline-block align-middle w-5 h-5 mx-0.5" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M 44.527344 34.75 C 43.449219 37.144531 42.929688 38.214844 41.542969 40.328125 C 39.601563 43.28125 36.863281 46.96875 33.480469 46.992188 C 30.46875 47.019531 29.691406 45.027344 25.601563 45.0625 C 21.515625 45.082031 20.664063 47.03125 17.648438 47 C 14.261719 46.96875 11.671875 43.648438 9.730469 40.699219 C 4.300781 32.429688 3.726563 22.734375 7.082031 17.578125 C 9.457031 13.921875 13.210938 11.773438 16.738281 11.773438 C 20.332031 11.773438 22.589844 13.746094 25.558594 13.746094 C 28.441406 13.746094 30.195313 11.769531 34.351563 11.769531 C 37.492188 11.769531 40.8125 13.480469 43.1875 16.433594 C 35.421875 20.691406 36.683594 31.78125 44.527344 34.75 Z M 31.195313 8.46875 C 32.707031 6.527344 33.855469 3.789063 33.4375 1 C 30.972656 1.167969 28.089844 2.742188 26.40625 4.78125 C 24.878906 6.640625 23.613281 9.398438 24.105469 12.066406 C 26.796875 12.152344 29.582031 10.546875 31.195313 8.46875 Z"/></svg>iOS)
+                        How to Change Voice Model<span class="inline-flex items-baseline whitespace-nowrap ml-1">(<svg class="inline-block align-middle w-5 h-5 mx-0.5" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M 44.527344 34.75 C 43.449219 37.144531 42.929688 38.214844 41.542969 40.328125 C 39.601563 43.28125 36.863281 46.96875 33.480469 46.992188 C 30.46875 47.019531 29.691406 45.027344 25.601563 45.0625 C 21.515625 45.082031 20.664063 47.03125 17.648438 47 C 14.261719 46.96875 11.671875 43.648438 9.730469 40.699219 C 4.300781 32.429688 3.726563 22.734375 7.082031 17.578125 C 9.457031 13.921875 13.210938 11.773438 16.738281 11.773438 C 20.332031 11.773438 22.589844 13.746094 25.558594 13.746094 C 28.441406 13.746094 30.195313 11.769531 34.351563 11.769531 C 37.492188 11.769531 40.8125 13.480469 43.1875 16.433594 C 35.421875 20.691406 36.683594 31.78125 44.527344 34.75 Z M 31.195313 8.46875 C 32.707031 6.527344 33.855469 3.789063 33.4375 1 C 30.972656 1.167969 28.089844 2.742188 26.40625 4.78125 C 24.878906 6.640625 23.613281 9.398438 24.105469 12.066406 C 26.796875 12.152344 29.582031 10.546875 31.195313 8.46875 Z"/></svg>iOS)</span>
                     </span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <p class="text-sm text-gray-600 mb-4">On iOS, you can select your preferred voice directly from the selection lists at the top of this page. <strong>If you encounter any issues</strong>, you can check your device's settings:</p>
@@ -959,7 +960,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                         How to Change Voice Model (<svg class="inline-block align-middle w-5 h-5 mx-0.5" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M 16.28125 0.03125 C 16.152344 0.0546875 16.019531 0.078125 15.90625 0.15625 C 15.449219 0.464844 15.347656 1.105469 15.65625 1.5625 L 17.8125 4.78125 C 14.480469 6.546875 11.996094 9.480469 11.1875 13 L 38.8125 13 C 38.003906 9.480469 35.519531 6.546875 32.1875 4.78125 L 34.34375 1.5625 C 34.652344 1.105469 34.550781 0.464844 34.09375 0.15625 C 33.632813 -0.152344 32.996094 -0.0195313 32.6875 0.4375 L 30.3125 3.9375 C 28.664063 3.335938 26.875 3 25 3 C 23.125 3 21.335938 3.335938 19.6875 3.9375 L 17.3125 0.4375 C 17.082031 0.09375 16.664063 -0.0429688 16.28125 0.03125 Z M 19.5 8 C 20.328125 8 21 8.671875 21 9.5 C 21 10.332031 20.328125 11 19.5 11 C 18.667969 11 18 10.332031 18 9.5 C 18 8.671875 18.667969 8 19.5 8 Z M 30.5 8 C 31.332031 8 32 8.671875 32 9.5 C 32 10.332031 31.332031 11 30.5 11 C 29.671875 11 29 10.332031 29 9.5 C 29 8.671875 29.671875 8 30.5 8 Z M 8 15 C 6.34375 15 5 16.34375 5 18 L 5 32 C 5 33.65625 6.34375 35 8 35 C 8.351563 35 8.6875 34.925781 9 34.8125 L 9 15.1875 C 8.6875 15.074219 8.351563 15 8 15 Z M 11 15 L 11 37 C 11 38.652344 12.347656 40 14 40 L 36 40 C 37.652344 40 39 38.652344 39 37 L 39 15 Z M 42 15 C 41.648438 15 41.3125 15.074219 41 15.1875 L 41 34.8125 C 41.3125 34.921875 41.648438 35 42 35 C 43.65625 35 45 33.65625 45 32 L 45 18 C 45 16.34375 43.65625 15 42 15 Z M 15 42 L 15 46 C 15 48.207031 16.792969 50 19 50 C 21.207031 50 23 48.207031 23 46 L 23 42 Z M 27 42 L 27 46 C 27 48.207031 28.792969 50 31 50 C 33.207031 50 35 48.207031 35 46 L 35 42 Z"/></svg>
                         Android)
                     </span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <p class="text-sm text-gray-600 mb-4">On Android, you can select your preferred voice model through the <strong>device settings</strong>. Follow these steps:</p>
@@ -1493,7 +1494,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                                         const repeatedName = Array(nameRepeatCount).fill(namePart).join(', ');
                                         const repeatedGate = Array(gateRepeatCount).fill(gatePart + '번').join(', ');
                                         
-                                        textToRead = `${part1} ${repeatedName}, ${part2} ${repeatedGate}${part3.substring(1).trim()}`;
+                                        textToRead = `${part1} ${repeatedName}, ${part2} ${repeatedGate} ${part3.substring(1).trim()}`;
 
                                     } else if (broadcastItem.id === 'broadcast-10') {
                                         const part1 = parentContainer.querySelector('.script-text-part1').textContent;
