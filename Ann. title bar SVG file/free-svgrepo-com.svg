@@ -1,33 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg width="800px" height="800px" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg" fill="none">
-
-<g style="stroke-width:.903553">
-
-<g style="stroke-width:1.22576">
-
-<path d="M6 104V56h34.856M6 80h21.855" class="a" style="fill:none;stroke:#000000;stroke-width:14.7089;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none" transform="matrix(.79792 0 0 .83414 17.08 29.264)"/>
-
-</g>
-
-<g style="stroke-width:2.24031;stroke-dasharray:none">
-
-<path d="M14.665 15.027V7.109h2.574a2.672 2.672 0 1 1 0 5.345h-2.574m5.245 2.573-2.483-2.582" class="a" style="fill:none;stroke:#000000;stroke-width:2.24031;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none" transform="matrix(5.56244 0 0 5.15795 -16.54 38.912)"/>
-
-</g>
-
-<g style="stroke-width:1.03392">
-
-<path d="M6 6h28v0M6 24h28v0M6 42h28v0" style="fill:none;stroke:#000000;stroke-width:12.4073;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1;stroke-dasharray:none;paint-order:stroke fill markers" transform="matrix(.86732 0 0 1.07855 141.13 70.11)"/>
-
-</g>
-
-<g style="stroke-width:1.03392">
-
-<path d="M6 6h28v0M6 24h28v0M6 42h28v0" style="fill:none;stroke:#000000;stroke-width:12.4073;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1;stroke-dasharray:none;paint-order:stroke fill markers" transform="matrix(.86732 0 0 1.07855 103.848 70.12)"/>
-
-</g>
-
-</g>
-
+<!--
+    - viewBox를 그래픽 콘텐츠에 맞게 정밀하게 조정하여 불필요한 외부 공백을 모두 제거했습니다.
+    - width와 height 속성을 제거하여 SVG가 다양한 크기의 컨테이너에 자동으로 맞춰지도록 했습니다.
+-->
+<svg viewBox="21 75 150 42" xmlns="http://www.w3.org/2000/svg" fill="none">
+    <g style="stroke-width:.903553">
+        <g style="stroke-width:1.22576">
+            <path d="M6 104V56h34.856M6 80h21.855" class="a" style="fill:none;stroke:#000000;stroke-width:14.7089;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none" transform="matrix(.79792 0 0 .83414 17.08 29.264)"/>
+        </g>
+        <g style="stroke-width:2.24031;stroke-dasharray:none">
+            <path d="M14.665 15.027V7.109h2.574a2.672 2.672 0 1 1 0 5.345h-2.574m5.245 2.573-2.483-2.582" class="a" style="fill:none;stroke:#000000;stroke-width:2.24031;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none" transform="matrix(5.56244 0 0 5.15795 -16.54 38.912)"/>
+        </g>
+        <g style="stroke-width:1.03392">
+            <path d="M6 6h28v0M6 24h28v0M6 42h28v0" style="fill:none;stroke:#000000;stroke-width:12.4073;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1;stroke-dasharray:none;paint-order:stroke fill markers" transform="matrix(.86732 0 0 1.07855 141.13 70.11)"/>
+        </g>
+        <g style="stroke-width:1.03392">
+            <path d="M6 6h28v0M6 24h28v0M6 42h28v0" style="fill:none;stroke:#000000;stroke-width:12.4073;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1;stroke-dasharray:none;paint-order:stroke fill markers" transform="matrix(.86732 0 0 1.07855 103.848 70.12)"/>
+        </g>
+    </g>
 </svg>
