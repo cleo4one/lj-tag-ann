@@ -107,7 +107,7 @@
                 transform: translateY(-80%);
             }
         }
-        
+       
         /* Cloud Animation */
         #background-clouds {
             position: absolute;
@@ -144,7 +144,7 @@
             max-width: 900px;
             height: 60px;
         }
-        
+       
         /* English Translation Tooltip Styles */
         .en-translation-tooltip {
             white-space: pre-wrap; /* Allows newlines in the tooltip */
@@ -268,9 +268,10 @@
         <div class="space-y-3">
             <!-- Broadcast #1 -->
             <div id="broadcast-1" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                    <span class="font-bold text-sm text-gray-700">#1 Final Call for Check-in (No names)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#1 Final Call for Check-in (No names)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/travel-agent-airport-checkin-airline-check-in-counter-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="flex items-start">
@@ -293,9 +294,10 @@
             </div>
             <!-- Broadcast #2 -->
             <div id="broadcast-2" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                    <span class="font-bold text-sm text-gray-700">#2 Final Call for Check-in (With names)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#2 Final Call for Check-in (With names)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/travel-agent-airport-checkin-airline-check-in-counter-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -345,7 +347,7 @@
             <div id="broadcast-3" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
                     <span class="font-bold text-sm text-gray-700 relative z-10">#3 Baggage Inspection Call</span>
-                    <div class="absolute inset-0 z-0" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 512 512\' fill=\'%23000000\'%3E%3Cg%3E%3Cpath d=\'M350.263,142.507c-2.584-2.584-5.355-4.866-8.258-6.879c-0.218-0.172-0.446-0.329-0.679-0.473 c-23.331-15.711-55.337-13.268-75.959,7.353c-17.689,17.688-22,43.758-12.95,65.544c0.126,0.358,0.273,0.71,0.456,1.051 c2.91,6.643,7.064,12.87,12.495,18.3c11.703,11.703,27.076,17.554,42.448,17.554c15.373,0,30.746-5.852,42.448-17.554 C373.669,203.996,373.669,165.912,350.263,142.507z M263.488,192.551c-2.363-13.903,1.797-28.709,12.507-39.418 c8.775-8.774,20.296-13.16,31.822-13.16c5.442,0,10.88,0.991,16.033,2.948L263.488,192.551z M275.993,216.776 c-2.819-2.819-5.179-5.925-7.092-9.22l68.603-56.407c0.726,0.638,1.441,1.292,2.133,1.985c2.463,2.463,4.568,5.149,6.339,7.985 l-68.921,56.668C276.7,217.452,276.341,217.123,275.993,216.776z M339.637,216.777c-13.326,13.326-32.994,16.52-49.374,9.605 l61.579-50.631C354.822,190.11,350.76,205.654,339.637,216.777z\'/%3E%3C/g%3E%3Cg%3E%3Cpath d=\'M462.962,308.403l-81.684-81.684c7.184-12.59,11.03-26.878,11.03-41.765c0-22.569-8.789-43.786-24.748-59.745 c-23.215-23.215-56.683-30.047-85.957-20.543c-9.854-6.215-20.789-10.291-32.182-12.048V37.478h15.103 c4.15,0,7.514-3.364,7.514-7.514V7.514c0-4.15-3.364-7.514-7.514-7.514H103.742c-4.15,0-7.514,3.364-7.514,7.514v22.449 c0,4.15,3.364,7.514,7.514,7.514h15.103V92.6c-40.718,6.231-72.008,41.492-72.008,83.924v236.174 c0,21.821,17.753,39.575,39.575,39.575h12.649c-1.848,3.602-2.898,7.677-2.898,11.997v21.354 c0,14.544,11.833,26.377,26.378,26.377c14.544,0,26.377-11.833,26.377-26.377v-21.354c0-4.319-1.05-8.395-2.897-11.997h76.228 c-1.847,3.602-2.897,7.677-2.897,11.997v21.354c0,14.544,11.833,26.377,26.378,26.377c14.544,0,26.377-11.833,26.377-26.377 v-21.354c0-4.319-1.05-8.395-2.898-11.997h12.649c21.821,0,39.575-17.753,39.575-39.575v-144.41 c9.768-1.583,19.305-4.879,28.131-9.892l81.704,81.704c1.409,1.41,3.32,2.201,5.313,2.201c1.993,0,3.904-0.792,5.313-2.201 l21.071-21.071C465.896,316.096,465.896,311.338,462.962,308.403z M111.256,22.449v-7.421h145.756v7.421h-15.103h-22.449H148.81 h-22.45H111.256z M234.394,37.478v54.144h-7.421V37.478H234.394z M211.945,37.478v54.144h-55.621V37.478H211.945z M141.296,37.478 v54.144h-7.422V37.478H141.296z M133.89,485.623c0,6.258-5.092,11.348-11.348,11.348c-6.258,0-11.349-5.092-11.349-11.348v-21.354 c0-6.258,5.092-11.348,11.349-11.348s11.348,5.092,11.348,11.348V485.623z M257.077,485.623L257.077,485.623 c-0.001,6.258-5.093,11.348-11.349,11.348c-6.258,0-11.348-5.092-11.348-11.348v-21.354c0-6.258,5.092-11.348,11.349-11.348 s11.348,5.092,11.348,11.348V485.623z M306.402,412.698c0,13.534-11.012,24.546-24.546,24.546H86.412 c-13.534,0-24.546-11.012-24.546-24.546V176.524c0-38.529,31.345-69.874,69.874-69.874h17.07h70.649h17.069 c9.641,0,19.098,2.006,27.846,5.839c-5.813,3.484-11.298,7.717-16.303,12.72c-32.943,32.943-32.943,86.546,0,119.489 c2.852,2.852,5.869,5.441,9.004,7.8v136.86c0,4.15,3.364,7.514,7.514,7.514s7.514-3.364,7.514-7.514V261.532 c10.848,5.047,22.556,7.647,34.298,7.842V412.698z M258.698,234.072c-27.084-27.084-27.084-71.152,0-98.236 c13.543-13.542,31.33-20.312,49.118-20.312c17.788,0,35.576,6.771,49.119,20.313c13.12,13.12,20.345,30.564,20.345,49.118 s-7.226,35.998-20.345,49.118C329.85,261.155,285.782,261.155,258.698,234.072z M436.578,324.161l-74.24-74.24l10.444-10.444 l74.24,74.24L436.578,324.161z\'/%3E%3C/g%3E%3Cg%3E%3Cpath d=\'M103.678,169.111c-4.15,0-7.514,3.364-7.514,7.514v212.734c0,4.15,3.364,7.514,7.514,7.514 c4.15,0,7.514-3.364,7.514-7.514V176.625C111.192,172.474,107.827,169.111,103.678,169.111z\'/%3E%3C/g%3E%3Cg%3E%3Cpath d=\'M157.315,169.111c-4.15,0-7.514,3.364-7.514,7.514v212.734c0,4.15,3.364,7.514,7.514,7.514s7.514-3.364,7.514-7.514 V176.625C164.829,172.474,161.466,169.111,157.315,169.111z\'/%3E%3C/g%3E%3Cg%3E%3Cpath d=\'M210.953,169.111c-4.15,0-7.514,3.364-7.514,7.514v212.734c0,4.15,3.364,7.514,7.514,7.514 c4.15,0,7.514-3.364,7.514-7.514V176.625C218.467,172.474,215.103,169.111,210.953,169.111z\'/%3E%3C/g%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/suitcase-luggage-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
                     <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform relative z-10 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
@@ -381,22 +383,23 @@
                                </div>
                           </div>
                            <p class="script-text-part2 text-sm leading-relaxed text-gray-600"> 승객께서는 진에어 체크인 카운터나 탑승구로 오시어 직원의 안내를 받아주시기 바랍니다. 감사합니다.</p>
-                       </div>
-                       <p class="script-text-combined bg-gray-100 rounded-lg p-3 text-sm leading-relaxed text-gray-700" style="display: none;"></p>
-                       <div class="player-controls mt-4">
-                             <div class="player-buttons flex items-center space-x-2">
-                                 <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
-                                 <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
-                                 <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
-                             </div>
-                       </div>
+                        </div>
+                        <p class="script-text-combined bg-gray-100 rounded-lg p-3 text-sm leading-relaxed text-gray-700" style="display: none;"></p>
+                        <div class="player-controls mt-4">
+                               <div class="player-buttons flex items-center space-x-2">
+                                   <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                                   <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                                   <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                               </div>
+                        </div>
                 </div>
             </div>
             <!-- Broadcast #4 -->
             <div id="broadcast-4" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                    <span class="font-bold text-sm text-gray-700">#4 Congested, please proceed to IMMG now</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#4 Congested, please proceed to IMMG now</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/immigration-check-sign-icon.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="flex items-start">
@@ -419,9 +422,10 @@
             </div>
             <!-- Broadcast #5 -->
             <div id="broadcast-5" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                    <span class="font-bold text-sm text-gray-700">#5 Pre-BRDG (PAX who need assistance)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#5 Pre-BRDG (PAX who need assistance)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/man-pushing-a-wheels-chair-with-person-sitting-on-it-with-injured-leg-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="flex items-start">
@@ -444,9 +448,10 @@
             </div>
             <!-- Broadcast #6 -->
             <div id="broadcast-6" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                    <span class="font-bold text-sm text-gray-700">#6 Commence Boarding (General)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#6 Commence Boarding (General)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/door-open-icon.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -484,9 +489,10 @@
             </div>
             <!-- Broadcast #7 -->
             <div id="broadcast-7" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                    <span class="font-bold text-sm text-gray-700">#7 In the middle of Boarding</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#7 In the middle of Boarding</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/software-update-installation-icon.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -524,9 +530,10 @@
             </div>
             <!-- Broadcast #8 -->
             <div id="broadcast-8" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                    <span class="font-bold text-sm text-gray-700">#8 Final Call for Boarding</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#8 Final Call for Boarding</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/last-minute-icon.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -541,14 +548,14 @@
                         </div>
                          <div class="name-input-container" data-repeat-count="2">
                             <input type="text" class="name-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Gate#" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                              <div class="flex justify-end items-center mt-2">
-                                  <div class="flex items-center space-x-2">
-                                      <span class="text-xs font-medium text-gray-700">Repeat:</span>
-                                      <button class="btn-repeat-minus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Decrease Repetitions">-</button>
-                                      <span class="repeat-count font-bold text-sm text-gray-800 w-6 text-center">2</span>
-                                      <button class="btn-repeat-plus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Increase Repetitions">+</button>
-                                  </div>
-                              </div>
+                               <div class="flex justify-end items-center mt-2">
+                                   <div class="flex items-center space-x-2">
+                                       <span class="text-xs font-medium text-gray-700">Repeat:</span>
+                                       <button class="btn-repeat-minus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Decrease Repetitions">-</button>
+                                       <span class="repeat-count font-bold text-sm text-gray-800 w-6 text-center">2</span>
+                                       <button class="btn-repeat-plus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Increase Repetitions">+</button>
+                                   </div>
+                               </div>
                          </div>
                         <p class="script-text-part2 text-sm leading-relaxed text-gray-600"> 탑승구로 이동해주시기 바랍니다. 진에어가 곧 탑승을 마감하겠습니다. 곧 출발하겠습니다. 감사합니다.</p>
                     </div>
@@ -564,9 +571,10 @@
             </div>
             <!-- Broadcast #9 -->
             <div id="broadcast-9" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                    <span class="font-bold text-sm text-gray-700">#9 Final Call for Boarding (With Name)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#9 Final Call for Boarding (With Name)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/last-minute-icon.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -626,9 +634,10 @@
             </div>
             <!-- Broadcast #10 -->
             <div id="broadcast-10" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                    <span class="font-bold text-sm text-gray-700">#10 Gate CHG to #1~#7</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#10 Gate CHG to #1~#7</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/basic-change-2-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -671,9 +680,10 @@
             </div>
             <!-- Broadcast #11 -->
             <div id="broadcast-11" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                    <span class="font-bold text-sm text-gray-700">#11 Gate CHG to #8 (Lower floor of Gate #7)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#11 Gate CHG to #8 (Lower floor of Gate #7)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/basic-change-2-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="flex items-start">
@@ -700,9 +710,10 @@ Once again, the new boarding gate is Gate 8 on the first floor. Please wait near
             </div>
             <!-- Announcement #12 (No translation) -->
             <div id="broadcast-12" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                    <span class="font-bold text-sm text-gray-700">#12 Carrying Power Banks Onboard Regulations (KR)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#12 Carrying Power Banks Onboard Regulations (KR)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/power-bank-icon.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <p class="script-text text-sm leading-relaxed text-gray-600">진에어에서 안내 말씀드리겠습니다. 항공기 탑승 후 보조배터리와 전자담배를 충전하거나, 기내 선반에 보관하는 것은 엄격히 금지되어 있습니다. 반드시 직접 휴대하거나 좌석 앞 주머니에 보관해 주시기 바랍니다. 감사합니다.</p>
@@ -717,9 +728,10 @@ Once again, the new boarding gate is Gate 8 on the first floor. Please wait near
             </div>
             <!-- Announcement #13 (No translation) -->
             <div id="broadcast-13" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                    <span class="font-bold text-sm text-gray-700">#13 Carrying Power Banks Onboard Regulations (EN)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#13 Carrying Power Banks Onboard Regulations (EN)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/power-bank-icon.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <p class="script-text text-sm leading-relaxed text-gray-600">Your attention please. This is an announcement from Jin Air. Please be advised that charging a power bank or electronic cigarettes, as well as storing them in the overhead compartments, is strictly prohibited once on board. You must keep these items on your person at all times or store them in the seat pocket in front of you. Thank you for your cooperation.</p>
@@ -734,9 +746,10 @@ Once again, the new boarding gate is Gate 8 on the first floor. Please wait near
             </div>
             <!-- Broadcast #14 -->
             <div id="broadcast-14" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                    <span class="font-bold text-sm text-gray-700">#14 FLT DLY - Due to A/C CONX (1st, In the middle of disembarkation)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#14 FLT DLY - Due to A/C CONX (1st, In the middle of disembarkation)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/airplane-airport-delay-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -783,9 +796,10 @@ Thank you for your understanding.<div class="absolute bottom-full left-4 -transl
             </div>
             <!-- Broadcast #15 -->
             <div id="broadcast-15" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                    <span class="font-bold text-sm text-gray-700">#15 FLT DLY - Due to A/C CONX (2nd, In the middle of cabin preparation)</span>
-                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#15 FLT DLY - Due to A/C CONX (2nd, In the middle of cabin preparation)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/airplane-airport-delay-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
                     <div class="script-input-area space-y-3">
@@ -834,9 +848,10 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
 
         <h2 class="text-xl font-bold text-gray-800 border-b-2 border-gray-200 pb-2 mb-4 mt-8">Custom Announcement</h2>
         <div id="broadcast-freeform" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
-            <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
-                <span class="font-bold text-sm text-gray-700">Free Form</span>
-                <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                <span class="font-bold text-sm text-gray-700 relative z-10">Free Form</span>
+                <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/free-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </h3>
             <div class="broadcast-content p-4 border-t border-gray-200">
                 <div id="custom-input-section">
@@ -915,7 +930,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                 </g>
             </svg>
         </div>
-        
+       
         <h2 class="text-xl font-bold text-gray-800 border-b-2 border-gray-200 pb-2 mb-4 mt-8">User Guide</h2>
         <div class="space-y-3">
             <div id="user-guide-homescreen" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
@@ -989,7 +1004,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
             <button id="modal-close" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">OK</button>
         </div>
     </div>
-    
+   
     <div id="start-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-70 z-50 flex justify-center items-center flex-col p-4">
         <button id="start-btn" class="bg-blue-500 text-white font-bold py-4 px-8 rounded-lg text-xl hover:bg-blue-600 transition-transform hover:scale-105 flex items-center space-x-3 mb-6">
             <span id="start-btn-text">Start</span>
@@ -1016,9 +1031,9 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                 PREVIEW: `<svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
                 RESET: `<svg class="w-5 h-5 text-gray-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.5 4.5V8.5H17.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M19.34 14.57A8 8 0 1 1 20.5 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><text x="12" y="15.5" font-family="Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle" fill="currentColor">1</text></svg>`
             };
-            
+           
             const airportNames = { ICN: '인천' };
-            
+           
             // Element Caching
             const header = document.getElementById('controls-header');
             const mainContent = document.querySelector('main');
@@ -1070,7 +1085,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                 loadVoices().then(() => {
                     isUnlocked = true;
                     startOverlay.classList.add('hidden');
-                    
+                   
                     if (keepAliveInterval) clearInterval(keepAliveInterval);
                     keepAliveInterval = setInterval(wakeUpSpeechSynth, 10000);
 
@@ -1112,7 +1127,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                     tryToGetVoices();
                 });
             }
-            
+           
             function initializeStaticUI() {
                 document.querySelectorAll('.btn-play-pause').forEach(btn => btn.innerHTML = ICONS.PLAY);
                 document.querySelectorAll('.btn-stop').forEach(btn => btn.innerHTML = ICONS.STOP);
@@ -1155,7 +1170,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                 const savedEnVoice = localStorage.getItem('tts-en-voice');
                 const savedFlight = localStorage.getItem('tts-flight');
                 const savedDest = localStorage.getItem('tts-dest');
-                
+               
                 voiceSelectKo.innerHTML = '';
                 voiceSelectEn.innerHTML = '';
 
@@ -1201,11 +1216,11 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
 
             function resetSinglePlayerUI(playerUI) {
                 if (!playerUI || !playerUI.playPauseBtn) return;
-                
+               
                 playerUI.playPauseBtn.innerHTML = ICONS.PLAY;
                 playerUI.playPauseBtn.setAttribute('aria-label', 'Play');
                 if(playerUI.progressBar) playerUI.progressBar.style.width = '0%';
-                
+               
                 const parentContainer = playerUI.playPauseBtn.closest('.broadcast-content, #custom-input-section');
                 if (!parentContainer) return;
 
@@ -1223,7 +1238,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                 if (parentContainer.querySelector('.script-input-area')) {
                     const scriptInputArea = parentContainer.querySelector('.script-input-area');
                     const combinedTextElement = parentContainer.querySelector('.script-text-combined');
-                    
+                   
                     if (scriptInputArea) scriptInputArea.style.display = 'block';
                     if (combinedTextElement) {
                         combinedTextElement.style.display = 'none';
@@ -1315,7 +1330,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
 
                 return segments;
             }
-            
+           
             function ensureAudioIsReady(callback) {
                 if (synth.speaking) { // If it's already speaking, just cancel and proceed
                     synth.cancel();
@@ -1337,7 +1352,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
             function speak(textToRead, playerUI) {
                 ensureAudioIsReady(() => {
                     activePlayerUI = playerUI;
-                    
+                   
                     const segments = parseTextToSegments(textToRead);
                     const totalLength = textToRead.length;
                     currentUtterances = [];
@@ -1366,7 +1381,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                     segments.forEach((segment, index) => {
                         const utterThis = new SpeechSynthesisUtterance(segment.text);
                         currentUtterances.push(utterThis);
-                        
+                       
                         utterThis.voice = segment.lang === 'ko' ? koVoice : enVoice;
                         utterThis.pitch = pitchInput.value;
                         utterThis.rate = rateInput.value;
@@ -1379,14 +1394,14 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                                 }
                             };
                         }
-                        
+                       
                         utterThis.onboundary = (event) => {
                             if (!activePlayerUI || !activePlayerUI.textElement) return;
-                            
+                           
                             const globalCharIndex = segment.startIndex + event.charIndex;
                             const progress = (globalCharIndex / totalLength) * 100;
                             activePlayerUI.progressBar.style.width = `${progress}%`;
-                            
+                           
                             const targetElement = activePlayerUI.textElement;
                             if (targetElement.tagName !== 'TEXTAREA') {
                                 let startPoint = globalCharIndex;
@@ -1399,7 +1414,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                                 targetElement.innerHTML = highlightedText;
                             }
                         };
-                        
+                       
                         if (index === segments.length - 1) {
                             utterThis.onend = () => {
                                 setTimeout(resetAllPlayers, 50);
@@ -1418,7 +1433,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                         resetAllPlayers();
                     }
                     const isAlreadyActive = clickedTitle.classList.contains('active');
-                    
+                   
                     document.querySelectorAll('.broadcast-title').forEach(title => {
                         title.classList.remove('active');
                     });
@@ -1433,7 +1448,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                 const playPauseBtn = player.querySelector('.btn-play-pause');
                 const stopBtn = player.querySelector('.btn-stop');
                 const progressBar = player.querySelector('.progress-bar-fill');
-                
+               
                 if (playPauseBtn && stopBtn) {
                     const playerUI = { playPauseBtn, stopBtn, progressBar };
 
@@ -1458,7 +1473,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                             const flightNumberFormatted = formatFlightNumberForReading(flightNumberRaw);
                             const destinationCode = destSelect.value;
                             const destinationName = airportNames[destinationCode] || destinationCode;
-                            
+                           
                             if (parentContainer.id === 'custom-input-section') {
                                 textToRead = customTextarea.value;
                                 if (!textToRead.trim()) {
@@ -1479,12 +1494,12 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                                         const part2 = parentContainer.querySelector('.script-text-part2').textContent;
                                         const gatePart = parentContainer.querySelector('.gate-input').value;
                                         const part3 = parentContainer.querySelector('.script-text-part3').textContent;
-                                        
+                                       
                                         if (!namePart.trim() || !gatePart.trim()) {
                                             showModal("Please enter both name and gate number.");
                                             return;
                                         }
-                                        
+                                       
                                         const nameRepeatContainer = parentContainer.querySelector('.name-input').closest('.name-input-container');
                                         const gateRepeatContainer = parentContainer.querySelector('.gate-input').closest('.name-input-container');
 
@@ -1493,7 +1508,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
 
                                         const repeatedName = Array(nameRepeatCount).fill(namePart).join(', ');
                                         const repeatedGate = Array(gateRepeatCount).fill(gatePart + '번').join(', ');
-                                        
+                                       
                                         textToRead = `${part1} ${repeatedName}, ${part2} ${repeatedGate} ${part3.substring(1).trim()}`;
 
                                     } else if (broadcastItem.id === 'broadcast-10') {
@@ -1525,7 +1540,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                                         const timeString = `${hour}시 ${minute}분`;
                                         const repeatedTime = Array(repeatCount).fill(timeString).join(', ');
                                         textToRead = `${part1} ${repeatedTime} 경 입니다. ${part2}`;
-                                    
+                                       
                                     } else { 
                                         const part1 = parentContainer.querySelector('.script-text-part1').textContent;
                                         const namePart = parentContainer.querySelector('.name-input').value;
@@ -1534,10 +1549,10 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                                             showModal("The input field is empty.");
                                             return;
                                         }
-                                        
+                                       
                                         const repeatContainer = parentContainer.querySelector('.name-input-container');
                                         const repeatCount = parseInt(repeatContainer.dataset.repeatCount, 10) || 1;
-                                        
+                                       
                                         if (broadcastItem.id === 'broadcast-2' || broadcastItem.id === 'broadcast-3') {
                                             const repeatedPart = Array(repeatCount).fill(namePart).join(', ');
                                             textToRead = part1 + " " + repeatedPart + ", " + part2;
@@ -1546,11 +1561,11 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                                             textToRead = part1 + " " + repeatedPart + " " + part2.substring(1).trim();
                                         }
                                     }
-                                    
+                                   
                                     const scriptInputArea = parentContainer.querySelector('.script-input-area');
                                     const combinedTextElement = parentContainer.querySelector('.script-text-combined');
                                     playerUI.textElement = combinedTextElement;
-                                    
+                                   
                                     scriptInputArea.style.display = 'none';
                                     combinedTextElement.style.display = 'block';
 
@@ -1562,11 +1577,11 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                                     }
                                 }
                             }
-                            
+                           
                             textToRead = textToRead
                                 .replace(/{flightNumber}/g, flightNumberFormatted) 
                                 .replace(/{destination}/g, destinationName);
-                            
+                           
                             if (playerUI.textElement) {
                                 playerUI.textElement.textContent = textToRead;
                             }
@@ -1583,7 +1598,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                     });
                 }
             });
-            
+           
             document.querySelectorAll('.broadcast-item').forEach(item => {
                 const repeatContainers = item.querySelectorAll('.name-input-container[data-repeat-count]');
                 repeatContainers.forEach(container => {
@@ -1636,9 +1651,9 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                         if (!response.ok) {
                             throw new Error(`API server error: ${response.status}`);
                         }
-                        
+                       
                         const result = await response.json();
-                        
+                       
                         if (result.responseData && result.responseData.translatedText) {
                             nameInput.value = result.responseData.translatedText;
                         } else {
@@ -1672,7 +1687,7 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
                     }
                 });
             }
-            
+           
             function initializeTooltipListeners() {
                 koInfoBtn.addEventListener('click', (event) => {
                     event.stopPropagation();
