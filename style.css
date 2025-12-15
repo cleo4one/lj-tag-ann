@@ -1,0 +1,139 @@
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #e5e7eb; /* bg-gray-200 for the body */
+    overflow-x: hidden;
+}
+
+/* Custom range input style */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #e5e7eb; /* gray-200 */
+    border-radius: 9999px;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+}
+input[type="range"]:hover {
+    opacity: 1;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #3b82f6; /* blue-500 */
+    cursor: pointer;
+    border-radius: 50%;
+}
+input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #3b82f6; /* blue-500 */
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.highlight { background-color: #fef08a; /* yellow-200 */ }
+
+.broadcast-content { display: none; }
+.broadcast-title.active + .broadcast-content { display: block; }
+.broadcast-title.active .arrow-icon { transform: rotate(180deg); }
+
+@keyframes spin { 
+    0% { transform: rotate(0deg); } 
+    100% { transform: rotate(360deg); } 
+}
+
+.loader {
+    width: 16px; height: 16px;
+    border: 2px solid #e5e7eb; /* gray-200 */
+    border-top: 2px solid #3b82f6; /* blue-500 */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: none; /* Initially hidden */
+}
+
+/* Pull to refresh indicator */
+#refresh-indicator {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%) scale(0.5);
+    background: white;
+    border-radius: 50%;
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+}
+
+/* Background Airplane Animation */
+#background-airplane {
+    position: absolute;
+    top: 60%; 
+    right: 1rem;
+    width: 100px;
+    height: auto;
+    z-index: -1;
+    opacity: 0.2; 
+    animation: float-up-down 5s ease-in-out infinite;
+}
+
+@keyframes float-up-down {
+    0% {
+        transform: translateY(-80%); 
+    }
+    50% {
+        transform: translateY(-20%);
+    }
+    100% {
+        transform: translateY(-80%);
+    }
+}
+
+/* Cloud Animation */
+#background-clouds {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%; 
+    height: 100%;
+    z-index: -2;
+    opacity: 0.3; 
+    animation: flow-across 40s linear infinite;
+}
+
+@keyframes flow-across {
+    0% {
+        transform: translateX(-50%); /* Start from left */
+    }
+    100% {
+        transform: translateX(0%); /* End at right */
+    }
+}
+
+/* Footer Panorama */
+#panorama-container {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 2rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#panorama-container svg {
+    width: 100%;
+    max-width: 900px;
+    height: 60px;
+}
+
+/* English Translation Tooltip Styles */
+.en-translation-tooltip {
+    white-space: pre-wrap; /* Allows newlines in the tooltip */
+}

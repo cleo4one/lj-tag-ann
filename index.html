@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>(Jin Air Bohol Branch) Announcement TTS Player</title>
+
+    <!-- Web App Meta Tags for iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="LJ TAG Ann.">
+    <meta name="theme-color" content="#e5e7eb">
+
+    <!-- App Icon and Favicon -->
+    <link rel="apple-touch-icon" href="https://github.com/cleo4one/lj-tag-ann/blob/main/icon.png?raw=true">
+    <link rel="icon" href="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23BED600'/%3E%3Ctext x='90' y='85' font-family='Arial, Helvetica, sans-serif' font-size='40' font-weight='bold' text-anchor='middle' fill='%23ffffff'%3ELJ TAG%3C/text%3E%3Ctext x='90' y='125' font-family='Arial, Helvetica, sans-serif' font-size='32' font-weight='bold' text-anchor='middle' fill='%23ffffff'%3EAnn.%3C/text%3E%3C/svg%3E">
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Nanum+Gothic:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-200">
+    <!-- Pull to Refresh Indicator -->
+    <div id="refresh-indicator">
+        <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 11A8.1 8.1 0 004.5 9.5M4 13a8.1 8.1 0 0015.5 1.5"></path>
+        </svg>
+    </div>
+
+    <!-- Header with Controls -->
+    <header id="controls-header" class="fixed top-0 left-0 right-0 z-40">
+        <!-- Background Layer with Animations -->
+        <div class="absolute inset-0 bg-white/80 backdrop-blur-sm shadow-md overflow-hidden">
+            <svg id="background-clouds" xmlns="http://www.w3.org/2000/svg">
+                <g fill="rgba(190, 214, 0, 0.4)">
+                    <circle cx="10%" cy="80%" r="30" /><circle cx="20%" cy="75%" r="40" /><circle cx="30%" cy="85%" r="35" /><circle cx="60%" cy="70%" r="50" /><circle cx="75%" cy="80%" r="40" />
+                    <circle cx="110%" cy="80%" r="30" /><circle cx="120%" cy="75%" r="40" /><circle cx="130%" cy="85%" r="35" /><circle cx="160%" cy="70%" r="50" /><circle cx="175%" cy="80%" r="40" />
+                </g>
+            </svg>
+            <svg id="background-airplane" viewBox="0 0 376.22032 247.96443" xmlns="http://www.w3.org/2000/svg">
+              <path d="m 91.977964,98.357262 c -4.23,-7.91 -18.9,-17.06 -26.57,-22.34 -15.83,-10.89 -39.48,-27.04 -51.19,-41.66 -3.78,-4.72 -11.3300005,-16.39 -13.0100005,-22 -0.80999998,-2.6999995 -1.37999998,-7.0599995 0.8,-9.2799995 3.77,-3.83000002 12.5500005,-2.19000002 17.3100005,-2.34000002 0,0 7.13,0 7.13,0 17.69,1.16000002 36.73,15.04999952 50.38,25.32999952 0,0 9.58,6.44 9.58,6.44 0,0 29.999996,21.85 29.999996,21.85 0,0 19,13.71 19,13.71 2.9,2.06 6.55,5.05 10,5.87 3.08,0.73 6.87,-0.17 10,-0.58 -1.75,-2.18 -3.84,-4.23 -4.57,-7.01 -1.7,-6.54 4.29,-14.77 9.57,-15.57 5.45,-0.83 18.89,9.15 23,12.75 3.92,3.43 5.4,5.95 11,5.38 0,0 39,-6.47 39,-6.47 0,0 93,-17.08 93,-17.08 0,0 24,-4.6 24,-4.6 4.54,-0.91 10.5,-2.22 15,-0.7 4.34,1.47 7.38,4.72 10,8.3 0,0 -53,19 -53,19 0,0 1,4 1,4 0,0 -18,7 -18,7 0,0 1,4 1,4 -2.31,-0.74 -3.48,-1.3 -6,-0.89 0,0 -23,9.29 -23,9.29 -3.87,1.58 -7.77,2.26 -9,6.6 -9.11,-1.18 -8.42,1.78 -15.83,3.369998 -9.36,2.01 -12.67,-2.779998 -22.17,5.63 0,0 -4,0 -4,0 0,0 4,5 4,5 0,0 -6,3 -6,3 0,0 1,4 1,4 -6.81,-0.45 -6.88,1.66 -13,4 0,0 0,2 0,2 0,0 35,25.12 35,25.12 2.87,2.11 12.21,9.11 15,9.95 3.59,1.07 9.45,-1.55 13,-2.74 0,0 23,-7.33 23,-7.33 3.3,-1.09 8.61,-3.26 12,-2.66 3.41,0.6 11.46,6.03 11.77,9.7 0.16,1.91 -1.3,4.34 -2.2,5.96 0,0 -8.57,16 -8.57,16 0,0 38,-4.28 38,-4.28 10.42,-1.29 17.53,-4.21 25,5.28 -5.64,2.07 -8.29,1.64 -13,6 0,0 -16,6.72 -16,6.72 0,0 -38,15.28 -38,15.28 0,0 5,12 5,12 -3.72,1.06 -6.15,1.25 -10,0.53 -2.78,-0.51 -6.34,-2.25 -9,-1.3 -2.01,0.71 -7.12,5.41 -9,7.05 0,0 -18,15.59 -18,15.59 -3.83,3.29 -7.65,8.04 -13,5.56 -7.88,-3.66 -5.48,-7.68 -3.88,-14.43 0,0 5.82,-26 5.82,-26 0.65,-5.52 -2.51,-6.22 -6.94,-8.15 0,0 -22,-10.1 -22,-10.1 -6.69,-3.36 -16.9,-9.23 -23,-13.47 -9.33,-6.49 -14.03,-11.44 -25,-15.28 -3.28,-1.15 -11.39,-5.19 -14,-4.97 -3.04,0.26 -16.37,8.91 -21,10.97 0,0 1,4 1,4 0,0 -7,0 -7,0 -10.27,-5.14 -9.43,7.25 -10.94,10 -2.44,4.42 -4.33,4.08 -6.06,10 -7.17,1.72 -12.41,12.01 -17.49,17 -5.639996,5.53 -9.869996,4.86 -14.619996,11.01 -2.66,3.45 -9.58,14.39 -12.98,15.86 -5.29,2.29 -8.98,-5.03 -16.91,-5.87 0,0 14.15,-52 14.15,-52 0.92,-3.41 5.59,-18.4 4.95,-20.78 -0.75,-2.79 -5.67,-4.27 -8.1,-5.68 -5.97,-3.47 -21.03,-13.05 -20.68,-20.54 0.08,-1.77 0.79,-3.46 1.65,-4.99 5.91,-10.46 11.82,-5.22 21.03,-5.01 1.92,6.38 8.46,9.88 14,13 2.24,-7.68 10.22,-26.18 6.57,-32.999998 z" style="fill:#BED600;stroke:none;" />
+            </svg>
+        </div>
+        <!-- Controls Content -->
+        <div class="relative max-w-4xl mx-auto px-2 py-1.5" style="padding-top: env(safe-area-inset-top);">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-1">
+                <div class="control-group flex items-center space-x-1.5">
+                    <div class="w-24 text-xs font-medium text-gray-700 shrink-0 flex items-center">
+                        <label for="voice-select-ko" class="mr-1">Korean Voice:</label>
+                        <div class="relative">
+                            <button id="ko-voice-info-btn" class="flex items-center justify-center" aria-label="Korean Voice Info">
+                                <svg class="h-4 w-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </button>
+                            <div id="ko-voice-tooltip" class="hidden absolute z-30 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">
+                                • Recommended<br>&nbsp;&nbsp;- iOS: Yuna(2nd)<br>&nbsp;&nbsp;- Android : Korean (South Korea) > Voice I
+                                <div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <select id="voice-select-ko" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1"><option>Loading voices...</option></select>
+                    <button id="preview-ko-voice" class="p-1 rounded-full hover:bg-gray-200 transition-colors shrink-0" aria-label="Preview Korean Voice"></button>
+                </div>
+                <div class="control-group flex items-center space-x-1.5">
+                    <div class="w-24 text-xs font-medium text-gray-700 shrink-0 flex items-center">
+                        <label for="voice-select-en" class="mr-1">English Voice:</label>
+                        <div class="relative">
+                            <button id="en-voice-info-btn" class="flex items-center justify-center" aria-label="English Voice Info">
+                                <svg class="h-4 w-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </button>
+                            <div id="en-voice-tooltip" class="hidden absolute z-30 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">
+                                • Recommended<br>&nbsp;&nbsp;- iOS: Samantha(2nd)<br>&nbsp;&nbsp;- Android : English (United States) > Voice VIII
+                                <div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <select id="voice-select-en" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1"><option>Loading voices...</option></select>
+                    <button id="preview-en-voice" class="p-1 rounded-full hover:bg-gray-200 transition-colors shrink-0" aria-label="Preview English Voice"></button>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-1 pt-1">
+                <div class="control-group flex items-center space-x-1.5">
+                    <label for="rate" class="w-24 text-xs font-medium text-gray-700 shrink-0">Speed:</label>
+                    <button id="reset-rate" class="p-1 rounded-full hover:bg-gray-200 transition-colors shrink-0" aria-label="Reset Speed"></button>
+                    <input type="range" id="rate" min="0.5" max="2" value="1" step="0.1">
+                    <span id="rate-value" class="font-semibold text-gray-700 w-8 text-center shrink-0">1</span>
+                    <button id="preview-rate" class="p-1 rounded-full hover:bg-gray-200 transition-colors shrink-0" aria-label="Preview Speed"></button>
+                </div>
+                <div class="control-group flex items-center space-x-1.5">
+                    <label for="pitch" class="w-24 text-xs font-medium text-gray-700 shrink-0">Pitch:</label>
+                    <button id="reset-pitch" class="p-1 rounded-full hover:bg-gray-200 transition-colors shrink-0" aria-label="Reset Pitch"></button>
+                    <input type="range" id="pitch" min="0" max="2" value="1" step="0.1">
+                    <span id="pitch-value" class="font-semibold text-gray-700 w-8 text-center shrink-0">1</span>
+                    <button id="preview-pitch" class="p-1 rounded-full hover:bg-gray-200 transition-colors shrink-0" aria-label="Preview Pitch"></button>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-x-3 gap-y-1 pt-1">
+                <div class="control-group flex items-center space-x-1.5">
+                    <label for="flight-select" class="w-24 text-xs font-medium text-gray-700 shrink-0">Flight:</label>
+                    <select id="flight-select" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1">
+                        <option>LJ044</option>
+                        <option>LJ046</option>
+                    </select>
+                </div>
+                <div class="control-group flex items-center space-x-1.5">
+                    <label for="dest-select" class="w-24 text-xs font-medium text-gray-700 shrink-0">Dest:</label>
+                    <select id="dest-select" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1">
+                        <option>ICN</option>
+                        <option>PUS</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="max-w-3xl mx-auto p-4 relative z-0">
+        <h2 class="text-xl font-bold text-gray-800 border-b-2 border-gray-200 pb-2 mb-4">Standard Announcements</h2>
+        <div class="space-y-3">
+            <!-- Broadcast #1 -->
+            <div id="broadcast-1" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#1 Final Call for Check-in (No names)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/travel-agent-airport-checkin-airline-check-in-counter-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <div class="flex items-start">
+                        <div class="relative mr-2 shrink-0">
+                            <button class="en-tooltip-btn flex items-center justify-center bg-gray-200 rounded-md p-1 hover:bg-gray-300 transition-colors" aria-label="Show English Translation">
+                                <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><text x="3" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4B5563">EN</text></svg>
+                            </button>
+                            <div class="en-translation-tooltip hidden absolute z-30 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">Final call for check-in. This is a final reminder for passengers traveling on Jin Air flight to {destination}. The check-in counter will be closing shortly. If you have not yet completed check-in, please proceed to the counter immediately. Thank you.<div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div></div>
+                        </div>
+                        <p class="script-text text-sm leading-relaxed text-gray-600">진에어에서 수속 마감 예정 안내 말씀 드리겠습니다. 진에어 {destination}행 체크인 카운터가 이제 곧 마감될 예정입니다. 아직까지 수속하지 않으신 진에어 {destination}행 승객께서는 카운터에서 수속을 바로 마쳐주시기 바랍니다. 감사합니다.</p>
+                    </div>
+                    <div class="player-controls mt-4">
+                        <div class="player-buttons flex items-center space-x-2">
+                            <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                            <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                            <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Broadcast #2 -->
+            <div id="broadcast-2" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#2 Final Call for Check-in (With names)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/travel-agent-airport-checkin-airline-check-in-counter-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <div class="script-input-area space-y-3">
+                        <div class="flex items-start">
+                            <div class="relative mr-2 shrink-0">
+                                <button class="en-tooltip-btn flex items-center justify-center bg-gray-200 rounded-md p-1 hover:bg-gray-300 transition-colors" aria-label="Show English Translation">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><text x="3" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4B5563">EN</text></svg>
+                                </button>
+                                <div class="en-translation-tooltip hidden absolute z-30 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">Final call for check-in. Passenger {Name}, booked on Jin Air flight to {destination}, please proceed to the Jin Air check-in counter immediately, as it will be closing shortly. Thank you.<div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div></div>
+                            </div>
+                            <p class="script-text-part1 text-sm leading-relaxed text-gray-600">진에어에서 수속 마감 예정 안내 말씀 드리겠습니다. 진에어 {destination}행 체크인 카운터가 이제 곧 마감될 예정입니다. 아직까지 수속하지 않으신,</p>
+                        </div>
+                        <div class="name-input-container" data-repeat-count="2">
+                            <textarea class="name-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Enter names here (Korean or English)." rows="2"></textarea>
+                            <div class="flex justify-between items-center mt-2">
+                                <div class="flex items-center">
+                                   <div class="loader mr-2"></div>
+                                   <button class="btn-translate bg-blue-100 text-blue-700 px-3 py-1.5 rounded-lg hover:bg-blue-200 transition-colors disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed flex items-center justify-center" aria-label="Translate Name">
+                                        <svg width="40" height="20" viewBox="0 0 42 20" xmlns="http://www.w3.org/2000/svg" class="h-5">
+                                            <text x="2" y="15" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="currentColor">A</text>
+                                            <path d="M14 10 L26 10 M21 5 L26 10 L21 15" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            <text x="28" y="15" font-family="sans-serif" font-size="16" font-weight="bold" fill="currentColor">가</text>
+                                        </svg>
+                                   </button>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs font-medium text-gray-700">Repeat:</span>
+                                    <button class="btn-repeat-minus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Decrease Repetitions">-</button>
+                                    <span class="repeat-count font-bold text-sm text-gray-800 w-6 text-center">2</span>
+                                    <button class="btn-repeat-plus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Increase Repetitions">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="script-text-part2 text-sm leading-relaxed text-gray-600">승객께서는 진에어 카운터에서 수속을 바로 마쳐주시기 바랍니다. 감사합니다.</p>
+                    </div>
+                    <p class="script-text-combined bg-gray-100 rounded-lg p-3 text-sm leading-relaxed text-gray-700" style="display: none;"></p>
+                    <div class="player-controls mt-4">
+                        <div class="player-buttons flex items-center space-x-2">
+                            <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                            <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                            <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Broadcast #3 -->
+            <div id="broadcast-3" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#3 Baggage Inspection Call</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/suitcase-luggage-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform relative z-10 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                     <div class="script-input-area space-y-3">
+                         <div class="flex items-start">
+                            <div class="relative mr-2 shrink-0">
+                                <button class="en-tooltip-btn flex items-center justify-center bg-gray-200 rounded-md p-1 hover:bg-gray-300 transition-colors" aria-label="Show English Translation">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><text x="3" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4B5563">EN</text></svg>
+                                </button>
+                                <div class="en-translation-tooltip hidden absolute z-30 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">Passenger {Name} on Jin Air flight to {destination}, your checked baggage requires additional screening and has not yet been loaded. Please report to the Jin Air check-in counter or boarding gate as soon as possible for further assistance. Thank you.<div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div></div>
+                            </div>
+                            <p class="script-text-part1 text-sm leading-relaxed text-gray-600">진에어에서 승객을 찾습니다. 수하물 재검사가 필요합니다. 현재 위탁하신 수하물이 탑재되지 않고 있습니다. 진에어 {destination}행, </p>
+                         </div>
+                          <div class="name-input-container" data-repeat-count="2">
+                               <textarea class="name-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Enter names here (Korean or English)." rows="2"></textarea>
+                               <div class="flex justify-between items-center mt-2">
+                                   <div class="flex items-center">
+                                       <div class="loader mr-2"></div>
+                                       <button class="btn-translate bg-blue-100 text-blue-700 px-3 py-1.5 rounded-lg hover:bg-blue-200 transition-colors disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed flex items-center justify-center" aria-label="Translate Name">
+                                            <svg width="40" height="20" viewBox="0 0 42 20" xmlns="http://www.w3.org/2000/svg" class="h-5">
+                                                <text x="2" y="15" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="currentColor">A</text>
+                                                <path d="M14 10 L26 10 M21 5 L26 10 L21 15" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <text x="28" y="15" font-family="sans-serif" font-size="16" font-weight="bold" fill="currentColor">가</text>
+                                            </svg>
+                                       </button>
+                                   </div>
+                                   <div class="flex items-center space-x-2">
+                                       <span class="text-xs font-medium text-gray-700">Repeat:</span>
+                                       <button class="btn-repeat-minus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Decrease Repetitions">-</button>
+                                       <span class="repeat-count font-bold text-sm text-gray-800 w-6 text-center">2</span>
+                                       <button class="btn-repeat-plus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Increase Repetitions">+</button>
+                                   </div>
+                               </div>
+                          </div>
+                           <p class="script-text-part2 text-sm leading-relaxed text-gray-600"> 승객께서는 진에어 체크인 카운터나 탑승구로 오시어 직원의 안내를 받아주시기 바랍니다. 감사합니다.</p>
+                        </div>
+                        <p class="script-text-combined bg-gray-100 rounded-lg p-3 text-sm leading-relaxed text-gray-700" style="display: none;"></p>
+                        <div class="player-controls mt-4">
+                               <div class="player-buttons flex items-center space-x-2">
+                                   <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                                   <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                                   <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                               </div>
+                        </div>
+                </div>
+            </div>
+            <!-- Broadcast #4 -->
+            <div id="broadcast-4" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#4 Congested, please proceed to IMMG now</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/immigration-check-sign-icon.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <div class="flex items-start">
+                        <div class="relative mr-2 shrink-0">
+                            <button class="en-tooltip-btn flex items-center justify-center bg-gray-200 rounded-md p-1 hover:bg-gray-300 transition-colors" aria-label="Show English Translation">
+                                <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><text x="3" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4B5563">EN</text></svg>
+                            </button>
+                            <div class="en-translation-tooltip hidden absolute z-30 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">Attention Jin Air passengers: Due to airport congestion, we kindly advise all Jin Air guests to proceed to the security screening and immigration area without delay after paying the terminal fee, to ensure timely boarding. Thank you.<div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div></div>
+                        </div>
+                        <p class="script-text text-sm leading-relaxed text-gray-600">진에어에서 출국 심사대 진입 안내 말씀 드리겠습니다. 공항이 혼잡하오니, 진에어 손님 여러분들께서는 탑승에 문제 없도록, 공항세를 납부하신 후 보안 검색대 및 출국 심사대로 바로 진입해주시기 바랍니다. 감사합니다.</p>
+                    </div>
+                    <div class="player-controls mt-4">
+                        <div class="player-buttons flex items-center space-x-2">
+                            <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                            <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                            <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Broadcast #5 -->
+            <div id="broadcast-5" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#5 Pre-BRDG (PAX who need assistance)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/man-pushing-a-wheels-chair-with-person-sitting-on-it-with-injured-leg-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <div class="flex items-start">
+                        <div class="relative mr-2 shrink-0">
+                            <button class="en-tooltip-btn flex items-center justify-center bg-gray-200 rounded-md p-1 hover:bg-gray-300 transition-colors" aria-label="Show English Translation">
+                                <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><text x="3" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4B5563">EN</text></svg>
+                            </button>
+                            <div class="en-translation-tooltip hidden absolute z-30 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">This is a pre-boarding announcement for Jin Air flight {flightNumber} to {destination}. We would now like to invite passengers requiring special assistance to come forward and prepare for boarding. This includes passengers traveling with infants under the age of two, expectant mothers, and elderly passengers. All other passengers, please remain seated until your boarding group is called. Thank you.<div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div></div>
+                        </div>
+                        <p class="script-text text-sm leading-relaxed text-gray-600">진에어에서 도움이 필요하신 승객의 탑승 안내 말씀 드리겠습니다. 만 2 세 미만, 유아를 동반하신 승객이나, 임산부, 노약자 등, 도움이 필요하신 승객께서는, 진에어 {destination}행 {flightNumber}편의 탑승이 곧 시작될 예정이오니, 지금, 먼저 앞으로 나오시어 탑승을 우선 대기해주시기 바랍니다. 다른 승객분들께서는 일반 탑승 안내를 기다려주시기 바랍니다. 감사합니다.</p>
+                    </div>
+                    <div class="player-controls mt-4">
+                        <div class="player-buttons flex items-center space-x-2">
+                            <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                            <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                            <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Broadcast #6 -->
+            <div id="broadcast-6" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#6 Commence Boarding (General)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/door-open-icon.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <div class="script-input-area space-y-3">
+                        <div class="flex items-start">
+                            <div class="relative mr-2 shrink-0">
+                                <button class="en-tooltip-btn flex items-center justify-center bg-gray-200 rounded-md p-1 hover:bg-gray-300 transition-colors" aria-label="Show English Translation">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><text x="3" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4B5563">EN</text></svg>
+                                </button>
+                                <div class="en-translation-tooltip hidden absolute z-30 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">Jin Air flight {flightNumber} to {destination} is now boarding. All passengers for Jin Air flight {flightNumber}, please proceed to Gate {Gate#} for boarding at this time. Please have your boarding pass and passport ready for individual verification at the gate. Thank you.<div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div></div>
+                            </div>
+                            <p class="script-text-part1 text-sm leading-relaxed text-gray-600">진에어에서 탑승 시작 안내 말씀 드리겠습니다. 진에어 {flightNumber}편, {destination}행 항공편은, 지금부터 탑승을 시작하겠습니다. 진에어 {destination}행 승객여러분들께서는, </p>
+                        </div>
+                        <div class="name-input-container" data-repeat-count="2">
+                            <input type="text" class="name-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Gate#" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                             <div class="flex justify-end items-center mt-2">
+                                 <div class="flex items-center space-x-2">
+                                     <span class="text-xs font-medium text-gray-700">Repeat:</span>
+                                     <button class="btn-repeat-minus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Decrease Repetitions">-</button>
+                                     <span class="repeat-count font-bold text-sm text-gray-800 w-6 text-center">2</span>
+                                     <button class="btn-repeat-plus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Increase Repetitions">+</button>
+                                 </div>
+                             </div>
+                        </div>
+                        <p class="script-text-part2 text-sm leading-relaxed text-gray-600"> 탑승구로 지금 탑승해주시기 바랍니다. 탑승구에서 탑승권과 여권을 개인별로 확인하고 있습니다. 탑승구 직원에게 본인 성함의 탑승권과 여권을 보여주시기 바랍니다. 감사합니다.</p>
+                    </div>
+                    <p class="script-text-combined bg-gray-100 rounded-lg p-3 text-sm leading-relaxed text-gray-700" style="display: none;"></p>
+                    <div class="player-controls mt-4">
+                        <div class="player-buttons flex items-center space-x-2">
+                            <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                            <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                            <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Broadcast #7 -->
+            <div id="broadcast-7" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#7 In the middle of Boarding</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/software-update-installation-icon.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <div class="script-input-area space-y-3">
+                        <div class="flex items-start">
+                            <div class="relative mr-2 shrink-0">
+                                <button class="en-tooltip-btn flex items-center justify-center bg-gray-200 rounded-md p-1 hover:bg-gray-300 transition-colors" aria-label="Show English Translation">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><text x="3" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4B5563">EN</text></svg>
+                                </button>
+                                <div class="en-translation-tooltip hidden absolute z-30 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">This is the boarding announcement for Jin Air flight {flightNumber} to {destination}. Boarding is currently in progress. All remaining passengers are kindly requested to proceed to Gate {Gate#} and complete boarding at this time. Thank you.<div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div></div>
+                            </div>
+                            <p class="script-text-part1 text-sm leading-relaxed text-gray-600">진에어에서 탑승 안내 말씀 드리겠습니다. 진에어 {destination}행 {flightNumber}편은 현재 탑승, 탑승 중에 있습니다. 진에어 손님 여러분들께서는 </p>
+                        </div>
+                        <div class="name-input-container" data-repeat-count="2">
+                             <input type="text" class="name-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Gate#" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                             <div class="flex justify-end items-center mt-2">
+                                 <div class="flex items-center space-x-2">
+                                     <span class="text-xs font-medium text-gray-700">Repeat:</span>
+                                     <button class="btn-repeat-minus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Decrease Repetitions">-</button>
+                                     <span class="repeat-count font-bold text-sm text-gray-800 w-6 text-center">2</span>
+                                     <button class="btn-repeat-plus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Increase Repetitions">+</button>
+                                 </div>
+                             </div>
+                        </div>
+                        <p class="script-text-part2 text-sm leading-relaxed text-gray-600"> 탑승구로 탑승을 마쳐주시기 바랍니다. 진에어 {destination}행 {flightNumber}편이 탑승 진행 중입니다. 감사합니다.</p>
+                    </div>
+                    <p class="script-text-combined bg-gray-100 rounded-lg p-3 text-sm leading-relaxed text-gray-700" style="display: none;"></p>
+                    <div class="player-controls mt-4">
+                        <div class="player-buttons flex items-center space-x-2">
+                            <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                            <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                            <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Broadcast #8 -->
+            <div id="broadcast-8" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#8 Final Call for Boarding</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/last-minute-icon.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <div class="script-input-area space-y-3">
+                        <div class="flex items-start">
+                            <div class="relative mr-2 shrink-0">
+                                <button class="en-tooltip-btn flex items-center justify-center bg-gray-200 rounded-md p-1 hover:bg-gray-300 transition-colors" aria-label="Show English Translation">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><text x="3" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4B5563">EN</text></svg>
+                                </button>
+                                <div class="en-translation-tooltip hidden absolute z-30 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">Final boarding call for Jin Air flight {flightNumber} to {destination}. This flight is about to close and depart shortly. Any remaining passengers should proceed immediately to Gate {Gate#} for final boarding. Jin Air will be closing the gate momentarily. Thank you.<div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div></div>
+                            </div>
+                            <p class="script-text-part1 text-sm leading-relaxed text-gray-600">진에어에서 탑승 마감 예정, {destination}행 {flightNumber}편의 출발 예정 안내 말씀 드리겠습니다. 진에어 {destination}행 {flightNumber}편은 이제 곧 탑승을 마감하고, 출발할 예정입니다. 아직까지 탑승하시지 않은 진에어 승객 여러분들께서는 서둘러 </p>
+                        </div>
+                         <div class="name-input-container" data-repeat-count="2">
+                            <input type="text" class="name-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Gate#" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                               <div class="flex justify-end items-center mt-2">
+                                   <div class="flex items-center space-x-2">
+                                       <span class="text-xs font-medium text-gray-700">Repeat:</span>
+                                       <button class="btn-repeat-minus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Decrease Repetitions">-</button>
+                                       <span class="repeat-count font-bold text-sm text-gray-800 w-6 text-center">2</span>
+                                       <button class="btn-repeat-plus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Increase Repetitions">+</button>
+                                   </div>
+                               </div>
+                         </div>
+                        <p class="script-text-part2 text-sm leading-relaxed text-gray-600"> 탑승구로 이동해주시기 바랍니다. 진에어가 곧 탑승을 마감하겠습니다. 곧 출발하겠습니다. 감사합니다.</p>
+                    </div>
+                    <p class="script-text-combined bg-gray-100 rounded-lg p-3 text-sm leading-relaxed text-gray-700" style="display: none;"></p>
+                    <div class="player-controls mt-4">
+                        <div class="player-buttons flex items-center space-x-2">
+                            <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                            <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                            <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Broadcast #9 -->
+            <div id="broadcast-9" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#9 Final Call for Boarding (With Name)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/last-minute-icon.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <div class="script-input-area space-y-3">
+                        <div class="flex items-start">
+                             <div class="relative mr-2 shrink-0">
+                                <button class="en-tooltip-btn flex items-center justify-center bg-gray-200 rounded-md p-1 hover:bg-gray-300 transition-colors" aria-label="Show English Translation">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><text x="3" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4B5563">EN</text></svg>
+                                </button>
+                                <div class="en-translation-tooltip hidden absolute z-30 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">Final call for passenger {Name} booked on Jin Air flight {flightNumber} to {destination}. This flight is closing shortly and scheduled for departure. Please proceed immediately to Gate {Gate#} for final boarding. Jin Air will be closing the gate momentarily. Thank you.<div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div></div>
+                            </div>
+                            <p class="script-text-part1 text-sm leading-relaxed text-gray-600">진에어에서 탑승 마감 예정, {destination}행 {flightNumber}편의 출발 예정 안내 말씀 드리겠습니다. 진에어 {destination}행 {flightNumber}편은 이제 곧 탑승을 마감하고, 출발할 예정입니다. 아직까지 탑승하시지 않으신,</p>
+                        </div>
+                        <div class="name-input-container" data-repeat-count="2">
+                            <textarea class="name-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Enter names here (Korean or English)." rows="2"></textarea>
+                            <div class="flex justify-between items-center mt-2">
+                                <div class="flex items-center">
+                                   <div class="loader mr-2"></div>
+                                   <button class="btn-translate bg-blue-100 text-blue-700 px-3 py-1.5 rounded-lg hover:bg-blue-200 transition-colors disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed flex items-center justify-center" aria-label="Translate Name">
+                                        <svg width="40" height="20" viewBox="0 0 42 20" xmlns="http://www.w3.org/2000/svg" class="h-5">
+                                            <text x="2" y="15" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="currentColor">A</text>
+                                            <path d="M14 10 L26 10 M21 5 L26 10 L21 15" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            <text x="28" y="15" font-family="sans-serif" font-size="16" font-weight="bold" fill="currentColor">가</text>
+                                        </svg>
+                                   </button>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs font-medium text-gray-700">Repeat:</span>
+                                    <button class="btn-repeat-minus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Decrease Repetitions">-</button>
+                                    <span class="repeat-count font-bold text-sm text-gray-800 w-6 text-center">2</span>
+                                    <button class="btn-repeat-plus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Increase Repetitions">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="script-text-part2 text-sm leading-relaxed text-gray-600">승객께서는 서둘러</p>
+                        <div class="name-input-container" data-repeat-count="2">
+                            <input type="text" class="gate-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Gate#" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                             <div class="flex justify-end items-center mt-2">
+                                 <div class="flex items-center space-x-2">
+                                     <span class="text-xs font-medium text-gray-700">Repeat:</span>
+                                     <button class="btn-repeat-minus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Decrease Repetitions">-</button>
+                                     <span class="repeat-count font-bold text-sm text-gray-800 w-6 text-center">2</span>
+                                     <button class="btn-repeat-plus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Increase Repetitions">+</button>
+                                 </div>
+                             </div>
+                        </div>
+                        <p class="script-text-part3 text-sm leading-relaxed text-gray-600">번 탑승구로 이동해주시기 바랍니다. 진에어가 곧 탑승을 마감하겠습니다. 곧 출발하겠습니다. 감사합니다.</p>
+                    </div>
+                    <p class="script-text-combined bg-gray-100 rounded-lg p-3 text-sm leading-relaxed text-gray-700" style="display: none;"></p>
+                    <div class="player-controls mt-4">
+                        <div class="player-buttons flex items-center space-x-2">
+                            <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                            <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                            <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Broadcast #10 -->
+            <div id="broadcast-10" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#10 Gate CHG to #1~#7</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/basic-change-2-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <div class="script-input-area space-y-3">
+                        <div class="flex items-start">
+                             <div class="relative mr-2 shrink-0">
+                                <button class="en-tooltip-btn flex items-center justify-center bg-gray-200 rounded-md p-1 hover:bg-gray-300 transition-colors" aria-label="Show English Translation">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><text x="3" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4B5563">EN</text></svg>
+                                </button>
+                                <div class="en-translation-tooltip hidden absolute z-30 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">Attention please. This is an announcement from Jin Air. The boarding gate for Jin Air flight {flightNumber} to {destination} has been changed. The new gate is Gate {Gate#}, located on the {Floor#} floor. Passengers are kindly requested to proceed to the new gate and wait near Gate {Gate#}. Thank you.<div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div></div>
+                            </div>
+                            <p class="script-text-part1 text-sm leading-relaxed text-gray-600">진에어에서 탑승구 변경 안내 말씀 드리겠습니다. 진에어 {flightNumber}편, {destination}행 항공편의 탑승구는 </p>
+                        </div>
+                        <div class="name-input-container" data-repeat-count="2">
+                            <div class="flex items-center space-x-2">
+                                <input type="text" class="name-input floor-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Floor#" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                <span>층,</span>
+                                <input type="text" class="name-input gate-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Gate#" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                <span>번으로 변경되었습니다.</span>
+                            </div>
+                             <div class="flex justify-end items-center mt-2">
+                                 <div class="flex items-center space-x-2">
+                                     <span class="text-xs font-medium text-gray-700">Repeat:</span>
+                                     <button class="btn-repeat-minus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Decrease Repetitions">-</button>
+                                     <span class="repeat-count font-bold text-sm text-gray-800 w-6 text-center">2</span>
+                                     <button class="btn-repeat-plus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Increase Repetitions">+</button>
+                                 </div>
+                             </div>
+                        </div>
+                        <p class="script-text-part2 text-sm leading-relaxed text-gray-600">진에어 손님여러분들께서는 탑승구 {gate}번 주변 좌석에서 대기해주시기 바랍니다. 감사합니다.</p>
+                    </div>
+                    <p class="script-text-combined bg-gray-100 rounded-lg p-3 text-sm leading-relaxed text-gray-700" style="display: none;"></p>
+                     <div class="player-controls mt-4">
+                        <div class="player-buttons flex items-center space-x-2">
+                            <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                            <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                            <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Broadcast #11 -->
+            <div id="broadcast-11" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#11 Gate CHG to #8 (Lower floor of Gate #7)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/basic-change-2-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <div class="flex items-start">
+                        <div class="relative mr-2 shrink-0">
+                            <button class="en-tooltip-btn flex items-center justify-center bg-gray-200 rounded-md p-1 hover:bg-gray-300 transition-colors" aria-label="Show English Translation">
+                                <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><text x="3" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4B5563">EN</text></svg>
+                            </button>
+                            <div class="en-translation-tooltip hidden absolute z-30 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">Attention please, this is a gate change announcement from Jin Air. The boarding gate for Jin Air flight {flightNumber} to {destination} has been changed to Gate 8 on the first floor.
+
+Passengers are kindly requested to first proceed to Gate 7 on the second floor. From there, please use the stairs or elevator located directly across the gate to go down to Gate 8 on the lower floor.
+
+Once again, the new boarding gate is Gate 8 on the first floor. Please wait near the updated gate area. Thank you.<div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div></div>
+                        </div>
+                        <p class="script-text text-sm leading-relaxed text-gray-600">진에어에서 탑승구 변경 안내 말씀 드리겠습니다. 진에어 {flightNumber}편, {destination}행 항공편의 탑승구는 1층 8번, 1층 8번으로 변경되었습니다. 진에어 손님여러분들께서는 2층 7번 탑승구로 먼저 이동하신 후, 7번 탑승구 맞은편에 있는 계단이나 엘리베이터를 이용하시어 아래층으로 이동하시면 8번, 진에어 탑승구 8번으로 이동하실 수 있습니다. 변경된 탑승구 8번 주변 좌석에서 대기해주시기 바랍니다. 감사합니다.</p>
+                    </div>
+                    <div class="player-controls mt-4">
+                        <div class="player-buttons flex items-center space-x-2">
+                            <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                            <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                            <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Broadcast #12 -->
+            <div id="broadcast-12" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#12 Carrying Power Banks Onboard Regulations (KR)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/power-bank-icon.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <p class="script-text text-sm leading-relaxed text-gray-600">진에어에서 안내 말씀드리겠습니다. 항공기 탑승 후 보조배터리와 전자담배를 충전하거나, 기내 선반에 보관하는 것은 엄격히 금지되어 있습니다. 반드시 직접 휴대하거나 좌석 앞 주머니에 보관해 주시기 바랍니다. 감사합니다.</p>
+                    <div class="player-controls mt-4">
+                        <div class="player-buttons flex items-center space-x-2">
+                            <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                            <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                            <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Broadcast #13 -->
+            <div id="broadcast-13" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#13 Carrying Power Banks Onboard Regulations (EN)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/power-bank-icon.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <p class="script-text text-sm leading-relaxed text-gray-600">Your attention please. This is an announcement from Jin Air. Please be advised that charging a power bank or electronic cigarettes, as well as storing them in the overhead compartments, is strictly prohibited once on board. You must keep these items on your person at all times or store them in the seat pocket in front of you. Thank you for your cooperation.</p>
+                    <div class="player-controls mt-4">
+                        <div class="player-buttons flex items-center space-x-2">
+                            <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                            <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                            <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Broadcast #14 -->
+            <div id="broadcast-14" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#14 FLT DLY - Due to A/C CONX (1st, In the middle of disembarkation)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/airplane-airport-delay-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <div class="script-input-area space-y-3">
+                        <div class="flex items-start">
+                            <div class="relative mr-2 shrink-0">
+                                <button class="en-tooltip-btn flex items-center justify-center bg-gray-200 rounded-md p-1 hover:bg-gray-300 transition-colors" aria-label="Show English Translation">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><text x="3" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4B5563">EN</text></svg>
+                                </button>
+                                <div class="en-translation-tooltip hidden absolute z-30 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">Ladies and gentlemen, we apologize for the delay in boarding Jin Air flight {flightNumber} to {destination}. The inbound aircraft has arrived behind schedule, and passenger disembarkation is currently in progress.
+Once disembarkation is complete and the cabin has been cleaned and prepared, we will make a boarding announcement.
+The estimated boarding time is around {Hour}:{Min}.
+We kindly ask all passengers of Jin Air flight {flightNumber} to remain seated near the gate area and refrain from lining up until further notice.
+Thank you for your understanding.<div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div></div>
+                            </div>
+                            <p class="script-text-part1 text-sm leading-relaxed text-gray-600">진에어에서 죄송한 탑승 지연 안내 말씀 드리겠습니다. 진에어 {destination}행, {flightNumber}편은, 선행 도착편의 지연 도착으로, 현재 선행 도착편 승객분들의 하기가 진행 중입니다. 승객 하기가 끝나고, 기내 청소, 기내 준비가 끝나면 방송으로 안내해드리겠습니다. 예상되는 탑승 예정 시각은</p>
+                        </div>
+                        <div class="name-input-container" data-repeat-count="2">
+                             <div class="flex items-center space-x-2">
+                                 <input type="text" class="name-input hour-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Hour" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                 <span>시</span>
+                                 <input type="text" class="name-input minute-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Min" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                 <span>분 경 입니다.</span>
+                             </div>
+                              <div class="flex justify-end items-center mt-2">
+                                  <div class="flex items-center space-x-2">
+                                      <span class="text-xs font-medium text-gray-700">Repeat:</span>
+                                      <button class="btn-repeat-minus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Decrease Repetitions">-</button>
+                                      <span class="repeat-count font-bold text-sm text-gray-800 w-6 text-center">2</span>
+                                      <button class="btn-repeat-plus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Increase Repetitions">+</button>
+                                  </div>
+                              </div>
+                        </div>
+                        <p class="script-text-part2 text-sm leading-relaxed text-gray-600">진에어 {flightNumber}편 승객 여러분들께서는 먼저 탑승구 앞으로 나와 줄 서지 마시고, 주변 좌석에 앉아 다음 안내 방송을 기다려주시기 바랍니다. 감사합니다.</p>
+                    </div>
+                    <p class="script-text-combined bg-gray-100 rounded-lg p-3 text-sm leading-relaxed text-gray-700" style="display: none;"></p>
+                    <div class="player-controls mt-4">
+                        <div class="player-buttons flex items-center space-x-2">
+                            <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                            <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                            <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Broadcast #15 -->
+            <div id="broadcast-15" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#15 FLT DLY - Due to A/C CONX (2nd, In the middle of cabin preparation)</span>
+                    <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/airplane-airport-delay-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <div class="script-input-area space-y-3">
+                        <div class="flex items-start">
+                            <div class="relative mr-2 shrink-0">
+                                <button class="en-tooltip-btn flex items-center justify-center bg-gray-200 rounded-md p-1 hover:bg-gray-300 transition-colors" aria-label="Show English Translation">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><text x="3" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4B5563">EN</text></svg>
+                                </button>
+                                <div class="en-translation-tooltip hidden absolute z-30 w-max max-w-xs bg-gray-800 text-white text-xs rounded py-1 px-2 top-full mt-2 left-0 text-left">Once again, we sincerely apologize for the delay in boarding Jin Air flight {flightNumber} to {destination}.
+Due to the delayed arrival of the inbound aircraft, cabin cleaning and preparations are currently underway.
+The estimated boarding time is around {Hour}:{Min}.
+Passengers on Jin Air flight {flightNumber}, please remain seated near the gate area and refrain from lining up until the next boarding announcement is made.
+Thank you for your understanding and patience.<div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div></div>
+                            </div>
+                            <p class="script-text-part1 text-sm leading-relaxed text-gray-600">거듭하여, 진에어에서 죄송한 탑승 지연 안내 말씀 드리겠습니다. 진에어 {destination}행, {flightNumber}편은, 선행 도착편의 지연 도착으로, 현재 기내 청소 및 준비가 진행 중입니다. 예상되는 탑승 예정 시각은</p>
+                        </div>
+                        <div class="name-input-container" data-repeat-count="2">
+                             <div class="flex items-center space-x-2">
+                                 <input type="text" class="name-input hour-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Hour" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                 <span>시</span>
+                                 <input type="text" class="name-input minute-input w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm" placeholder="Min" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                 <span>분 경 입니다.</span>
+                             </div>
+                              <div class="flex justify-end items-center mt-2">
+                                  <div class="flex items-center space-x-2">
+                                      <span class="text-xs font-medium text-gray-700">Repeat:</span>
+                                      <button class="btn-repeat-minus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Decrease Repetitions">-</button>
+                                      <span class="repeat-count font-bold text-sm text-gray-800 w-6 text-center">2</span>
+                                      <button class="btn-repeat-plus w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center hover:bg-gray-300 transition-colors" aria-label="Increase Repetitions">+</button>
+                                  </div>
+                              </div>
+                        </div>
+                        <p class="script-text-part2 text-sm leading-relaxed text-gray-600">진에어 {flightNumber}편 승객 여러분들께서는 먼저 탑승구 앞으로 나와 줄 서지 마시고, 주변 좌석에 앉아 다음 안내 방송을 기다려주시기 바랍니다. 감사합니다.</p>
+                    </div>
+                    <p class="script-text-combined bg-gray-100 rounded-lg p-3 text-sm leading-relaxed text-gray-700" style="display: none;"></p>
+                    <div class="player-controls mt-4">
+                        <div class="player-buttons flex items-center space-x-2">
+                            <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                            <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                            <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="text-xl font-bold text-gray-800 border-b-2 border-gray-200 pb-2 mb-4 mt-8">Custom Announcement</h2>
+        <div id="broadcast-freeform" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+            <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
+                <span class="font-bold text-sm text-gray-700 relative z-10">Free Form</span>
+                <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/free-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
+                <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </h3>
+            <div class="broadcast-content p-4 border-t border-gray-200">
+                <div id="custom-input-section">
+                    <textarea id="text-to-read" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition text-sm leading-normal" placeholder="Enter your custom announcement here..." rows="5"></textarea>
+                    <div id="custom-text-display" class="w-full p-3 text-sm leading-normal rounded-lg bg-gray-50" style="display: none; min-height: 110px;"></div>
+                    <div class="player-controls mt-4">
+                         <div class="player-buttons flex items-center space-x-2">
+                             <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
+                             <button class="btn-stop w-20 h-8 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center" aria-label="Stop"></button>
+                             <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar-fill bg-blue-500 h-2.5 rounded-full"></div></div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="panorama-container">
+            <svg viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <defs>
+                    <g id="person"><circle cx="0" cy="15" r="9" fill="#81D4FA"/><rect x="-7" y="24" width="14" height="24" rx="7" fill="#81D4FA"/></g>
+                    <g id="suitcase"><rect x="-12" y="-20" width="24" height="18" rx="6" fill="#CE93D8"/><rect x="-4" y="-26" width="8" height="6" rx="3" fill="#BA68C8"/></g>
+                    <g id="takeoff-plane" transform="rotate(-15)"><rect x="-20" y="-7" width="40" height="14" rx="7" fill="#B0BEC5"/><path d="M-20,0 L-30,-15 L-20,-15 Z" fill="#78909C"/><rect x="-10" y="7" width="20" height="8" rx="4" fill="#78909C"/><circle cx="12" cy="0" r="3" fill="white"/></g>
+                    <clipPath id="gateClip"><rect x="300" y="0" width="240" height="200"/></clipPath>
+                </defs>
+                <g transform="translate(0, -100)">
+                    <g id="scene1"><rect x="100" y="160" width="90" height="20" rx="5" fill="#AEDD81"/><rect x="95" y="155" width="95" height="5" rx="2.5" fill="#C5E1A5"/><rect x="190" y="160" width="70" height="20" rx="5" fill="#CFD8DC"/><rect x="185" y="155" width="80" height="5" rx="2.5" fill="#90A4AE"/><g transform="translate(140, 132)"><circle cx="0" cy="15" r="9" fill="#FFAB91"/><rect x="-7" y="24" width="14" height="24" rx="7" fill="#FFAB91"/></g><use xlink:href="#person" transform="translate(280, 132)"/><g><use xlink:href="#suitcase" x="265" y="158"/><animateTransform attributeName="transform" type="translate" values="0 0; -45 2; -45 2; -100 30" keyTimes="0; 0.3; 0.6; 1" dur="5s" begin="0.2s" repeatCount="indefinite" /><animate attributeName="opacity" values="1; 1; 1; 0" keyTimes="0; 0.6; 0.8; 1" dur="5s" begin="0.2s" repeatCount="indefinite" /></g><rect id="boardingPass" x="155" y="145" width="18" height="12" fill="#FFF59D" rx="3"><animate attributeName="x" values="155; 250; 250; 155" keyTimes="0; 0.4; 0.6; 1" dur="4s" repeatCount="indefinite" /></rect></g>
+                    <g id="scene2"><rect x="540" y="120" width="50" height="60" rx="10" fill="#4FC3F7"/><g clip-path="url(#gateClip)"><g id="passengerLine"><use xlink:href="#person" transform="translate(320, 132)"/><use xlink:href="#person" transform="translate(370, 132)"/><use xlink:href="#person" transform="translate(420, 132)"/><use xlink:href="#person" transform="translate(470, 132)"/><animateTransform attributeName="transform" type="translate" from="0 0" to="250 0" dur="8s" repeatCount="indefinite"/></g></g></g>
+                    <g id="scene3"><g><use xlink:href="#takeoff-plane" /><animateMotion dur="5s" repeatCount="indefinite" path="M630,155 C 720,155 780,140 940,110" /></g></g>
+                </g>
+            </svg>
+        </div>
+       
+        <h2 class="text-xl font-bold text-gray-800 border-b-2 border-gray-200 pb-2 mb-4 mt-8">User Guide</h2>
+        <div class="space-y-3">
+            <div id="user-guide-homescreen" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
+                    <span class="font-bold text-sm text-gray-700">Home Screen Icon for Quick Access<span class="inline-flex items-baseline whitespace-nowrap ml-1">(<svg class="inline-block align-middle w-5 h-5 mx-0.5" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M 44.527344 34.75 C 43.449219 37.144531 42.929688 38.214844 41.542969 40.328125 C 39.601563 43.28125 36.863281 46.96875 33.480469 46.992188 C 30.46875 47.019531 29.691406 45.027344 25.601563 45.0625 C 21.515625 45.082031 20.664063 47.03125 17.648438 47 C 14.261719 46.96875 11.671875 43.648438 9.730469 40.699219 C 4.300781 32.429688 3.726563 22.734375 7.082031 17.578125 C 9.457031 13.921875 13.210938 11.773438 16.738281 11.773438 C 20.332031 11.773438 22.589844 13.746094 25.558594 13.746094 C 28.441406 13.746094 30.195313 11.769531 34.351563 11.769531 C 37.492188 11.769531 40.8125 13.480469 43.1875 16.433594 C 35.421875 20.691406 36.683594 31.78125 44.527344 34.75 Z M 31.195313 8.46875 C 32.707031 6.527344 33.855469 3.789063 33.4375 1 C 30.972656 1.167969 28.089844 2.742188 26.40625 4.78125 C 24.878906 6.640625 23.613281 9.398438 24.105469 12.066406 C 26.796875 12.152344 29.582031 10.546875 31.195313 8.46875 Z"/></svg>iOS)</span></span>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                     <div class="text-left">
+                         <p class="text-sm text-gray-600 mt-1">Add this web app to your Home Screen.</p>
+                         <div class="mt-4 text-sm text-gray-700 space-y-2">
+                             <p>1. Tap the <svg class="inline-block w-5 h-5 align-middle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15m0-3-3-3m0 0-3 3m3-3v11.25" /></svg> Share icon.</p>
+                             <p>2. Select <svg class="inline-block w-5 h-5 align-middle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg> "Add to Home Screen".</p>
+                         </div>
+                         <div class="flex justify-center mt-4">
+                             <img src="https://github.com/cleo4one/lj-tag-ann/blob/main/icon.png?raw=true" class="w-14 h-14 rounded-lg"/>
+                         </div>
+                     </div>
+                </div>
+            </div>
+            <div id="user-guide-ios" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
+                    <span class="font-bold text-sm text-gray-700">How to Change Voice Model<span class="inline-flex items-baseline whitespace-nowrap ml-1">(<svg class="inline-block align-middle w-5 h-5 mx-0.5" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M 44.527344 34.75 C 43.449219 37.144531 42.929688 38.214844 41.542969 40.328125 C 39.601563 43.28125 36.863281 46.96875 33.480469 46.992188 C 30.46875 47.019531 29.691406 45.027344 25.601563 45.0625 C 21.515625 45.082031 20.664063 47.03125 17.648438 47 C 14.261719 46.96875 11.671875 43.648438 9.730469 40.699219 C 4.300781 32.429688 3.726563 22.734375 7.082031 17.578125 C 9.457031 13.921875 13.210938 11.773438 16.738281 11.773438 C 20.332031 11.773438 22.589844 13.746094 25.558594 13.746094 C 28.441406 13.746094 30.195313 11.769531 34.351563 11.769531 C 37.492188 11.769531 40.8125 13.480469 43.1875 16.433594 C 35.421875 20.691406 36.683594 31.78125 44.527344 34.75 Z M 31.195313 8.46875 C 32.707031 6.527344 33.855469 3.789063 33.4375 1 C 30.972656 1.167969 28.089844 2.742188 26.40625 4.78125 C 24.878906 6.640625 23.613281 9.398438 24.105469 12.066406 C 26.796875 12.152344 29.582031 10.546875 31.195313 8.46875 Z"/></svg>iOS)</span></span>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <p class="text-sm text-gray-600 mb-4">On iOS, you can select your preferred voice directly from the selection lists at the top of this page. <strong>If you encounter any issues</strong>, you can check your device's settings:</p>
+                    <ol class="list-decimal list-inside space-y-2 text-sm text-gray-700">
+                        <li>Open your iPhone's <strong>Settings</strong> app.</li>
+                        <li>Go to <strong>Accessibility</strong> > <strong>Spoken Content</strong> > <strong>Voices</strong>.</li>
+                        <li>Here, you can manage and download different voices for each language.</li>
+                    </ol>
+                </div>
+            </div>
+            <div id="user-guide-android" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
+                <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
+                    <span class="font-bold text-sm text-gray-700">How to Change Voice Model (<svg class="inline-block align-middle w-5 h-5 mx-0.5" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M 16.28125 0.03125 C 16.152344 0.0546875 16.019531 0.078125 15.90625 0.15625 C 15.449219 0.464844 15.347656 1.105469 15.65625 1.5625 L 17.8125 4.78125 C 14.480469 6.546875 11.996094 9.480469 11.1875 13 L 38.8125 13 C 38.003906 9.480469 35.519531 6.546875 32.1875 4.78125 L 34.34375 1.5625 C 34.652344 1.105469 34.550781 0.464844 34.09375 0.15625 C 33.632813 -0.152344 32.996094 -0.0195313 32.6875 0.4375 L 30.3125 3.9375 C 28.664063 3.335938 26.875 3 25 3 C 23.125 3 21.335938 3.335938 19.6875 3.9375 L 17.3125 0.4375 C 17.082031 0.09375 16.664063 -0.0429688 16.28125 0.03125 Z M 19.5 8 C 20.328125 8 21 8.671875 21 9.5 C 21 10.332031 20.328125 11 19.5 11 C 18.667969 11 18 10.332031 18 9.5 C 18 8.671875 18.667969 8 19.5 8 Z M 30.5 8 C 31.332031 8 32 8.671875 32 9.5 C 32 10.332031 31.332031 11 30.5 11 C 29.671875 11 29 10.332031 29 9.5 C 29 8.671875 29.671875 8 30.5 8 Z M 8 15 C 6.34375 15 5 16.34375 5 18 L 5 32 C 5 33.65625 6.34375 35 8 35 C 8.351563 35 8.6875 34.925781 9 34.8125 L 9 15.1875 C 8.6875 15.074219 8.351563 15 8 15 Z M 11 15 L 11 37 C 11 38.652344 12.347656 40 14 40 L 36 40 C 37.652344 40 39 38.652344 39 37 L 39 15 Z M 42 15 C 41.648438 15 41.3125 15.074219 41 15.1875 L 41 34.8125 C 41.3125 34.921875 41.648438 35 42 35 C 43.65625 35 45 33.65625 45 32 L 45 18 C 45 16.34375 43.65625 15 42 15 Z M 15 42 L 15 46 C 15 48.207031 16.792969 50 19 50 C 21.207031 50 23 48.207031 23 46 L 23 42 Z M 27 42 L 27 46 C 27 48.207031 28.792969 50 31 50 C 33.207031 50 35 48.207031 35 46 L 35 42 Z"/></svg> Android)</span>
+                    <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </h3>
+                <div class="broadcast-content p-4 border-t border-gray-200">
+                    <p class="text-sm text-gray-600 mb-4">On Android, you can select your preferred voice model through the <strong>device settings</strong>. Follow these steps:</p>
+                    <ol class="list-decimal list-inside space-y-2 text-sm text-gray-700">
+                        <li>First, select the desired country (e.g., South Korea, United States) from the voice selection lists at the top of this webpage.</li>
+                        <li>Open your phone's main <strong>Settings</strong> app.</li>
+                        <li>Go to <strong>System</strong> > <strong>Languages</strong> > <strong>Text-to-speech output</strong>.</li>
+                        <li>Tap on <strong>Preferred engine</strong> and ensure Speech Services <strong>by Google</strong> is selected.</li>
+                        <li>Tap the settings icon (cogwheel) next to <strong>Preferred engine</strong>.</li>
+                        <li>Select <strong>Install voice data</strong>.</li>
+                        <li>From the list, choose the languages (e.g., Korean (South Korea), English (United States)) and download or select the voice model you wish to use.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 text-xs text-gray-500">
+        <p>Jin Air TAG Announcements</p>
+        <p>Webpage creator: JeongHoon PARK(TAGKKKKZ)</p>
+        <p class="text-lg font-bold text-red-500 mt-2">Ver. 202512</p>
+    </footer>
+
+    <!-- Modals and Overlays -->
+    <div id="alert-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden justify-center items-center">
+        <div class="modal-content bg-white rounded-lg shadow-xl p-6 w-full max-w-sm text-center">
+            <p id="modal-text" class="text-gray-700 mb-4"></p>
+            <button id="modal-close" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">OK</button>
+        </div>
+    </div>
+   
+    <div id="start-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-70 z-50 flex justify-center items-center flex-col p-4">
+        <button id="start-btn" class="bg-blue-500 text-white font-bold py-4 px-8 rounded-lg text-xl hover:bg-blue-600 transition-transform hover:scale-105 flex items-center space-x-3 mb-6">
+            <span id="start-btn-text">Start</span>
+            <div id="start-loader" class="loader" style="border-top-color: white; border-left-color: white; border-right-color: white; display: none;"></div>
+        </button>
+        <p class="text-white text-xs mt-6 px-4 text-center max-w-sm">
+            First, set the voice model (Korean, English) at the top of the screen. The list of available voice models will appear based on what is supported by your device. Therefore, the types of voice models available may vary depending on your device model.
+        </p>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js" defer></script>
+</body>
+</html>
+
+
