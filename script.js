@@ -745,6 +745,27 @@ if ('speechSynthesis' in window) {
                 t.classList.add('hidden');
             });
         });
+    
+    // [Broadcast #11] Update script text when gate number is selected
+        const gateSelect11 = document.getElementById('gate-select-11');
+        const scriptText11 = document.getElementById('script-text-11');
+
+        if (gateSelect11 && scriptText11) {
+            gateSelect11.addEventListener('change', () => {
+                const selectedGate = gateSelect11.value;
+                const template = scriptText11.getAttribute('data-template');
+                
+                if (template) {
+                    // Replace all occurrences of {gate} with the selected number
+                    const updatedText = template.replace(/{gate}/g, selectedGate);
+                    
+                    // Update the visible text and the data for restoration
+                    scriptText11.textContent = updatedText;
+                    scriptText11.dataset.originalHtml = updatedText;
+                }
+            });
+        }
+    
     }
 
     // Initial setup on DOM ready

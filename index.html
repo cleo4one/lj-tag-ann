@@ -537,11 +537,21 @@
             <!-- Broadcast #11 -->
             <div id="broadcast-11" class="broadcast-item bg-white rounded-xl shadow-sm overflow-hidden">
                 <h3 class="broadcast-title p-4 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors relative overflow-hidden">
-                    <span class="font-bold text-sm text-gray-700 relative z-10">#11 Gate CHG to #8 (Lower floor of Gate #7)</span>
+                    <span class="font-bold text-sm text-gray-700 relative z-10">#11 Gate CHG to #8~#10 (Lower floor of Gate #7)</span>
                     <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/cleo4one/lj-tag-ann/main/Ann.%20title%20bar%20SVG%20file/basic-change-2-svgrepo-com.svg'); background-repeat: no-repeat; background-position: 80% center; background-size: auto 100%; opacity: 0.25; pointer-events: none;"></div>
                     <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
+                    <div class="flex items-center space-x-2 mb-3 bg-gray-50 p-2 rounded-lg">
+                        <label for="gate-select-11" class="text-sm font-bold text-gray-700">Changed Gate:</label>
+                        <select id="gate-select-11" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5 w-20">
+                            <option value="8" selected>8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <span class="text-sm text-gray-600">번 (1F)</span>
+                    </div>
+
                     <div class="flex items-start">
                         <div class="relative mr-2 shrink-0">
                             <button class="en-tooltip-btn flex items-center justify-center bg-gray-200 rounded-md p-1 hover:bg-gray-300 transition-colors" aria-label="Show English Translation">
@@ -553,7 +563,9 @@ Passengers are kindly requested to first proceed to Gate 7 on the second floor. 
 
 Once again, the new boarding gate is Gate 8 on the first floor. Please wait near the updated gate area. Thank you.<div class="absolute bottom-full left-4 -translate-x-1/2 border-4 border-transparent border-b-gray-800"></div></div>
                         </div>
-                        <p class="script-text text-sm leading-relaxed text-gray-600">진에어에서 탑승구 변경 안내 말씀 드리겠습니다. 진에어 {flightNumber}편, {destination}행 항공편의 탑승구는 1층 8번, 1층 8번으로 변경되었습니다. 진에어 손님여러분들께서는 2층 7번 탑승구로 먼저 이동하신 후, 7번 탑승구 맞은편에 있는 계단이나 엘리베이터를 이용하시어 아래층으로 이동하시면 8번, 진에어 탑승구 8번으로 이동하실 수 있습니다. 변경된 탑승구 8번 주변 좌석에서 대기해주시기 바랍니다. 감사합니다.</p>
+                        <p id="script-text-11" class="script-text text-sm leading-relaxed text-gray-600"
+                           data-template="진에어에서 탑승구 변경 안내 말씀 드리겠습니다. 진에어 {flightNumber}편, {destination}행 항공편의 탑승구는 1층 {gate}번, 1층 {gate}번으로 변경되었습니다. 진에어 손님여러분들께서는 2층 7번 탑승구로 먼저 이동하신 후, 7번 탑승구 맞은편에 있는 계단이나 엘리베이터를 이용하시어 아래층으로 이동하시면 {gate}번, 진에어 탑승구 {gate}번으로 이동하실 수 있습니다. 변경된 탑승구 {gate}번 주변 좌석에서 대기해주시기 바랍니다. 감사합니다.">
+                           진에어에서 탑승구 변경 안내 말씀 드리겠습니다. 진에어 {flightNumber}편, {destination}행 항공편의 탑승구는 1층 8번, 1층 8번으로 변경되었습니다. 진에어 손님여러분들께서는 2층 7번 탑승구로 먼저 이동하신 후, 7번 탑승구 맞은편에 있는 계단이나 엘리베이터를 이용하시어 아래층으로 이동하시면 8번, 진에어 탑승구 8번으로 이동하실 수 있습니다. 변경된 탑승구 8번 주변 좌석에서 대기해주시기 바랍니다. 감사합니다.</p>
                     </div>
                     <div class="player-controls mt-4">
                         <div class="player-buttons flex items-center space-x-2">
@@ -572,7 +584,7 @@ Once again, the new boarding gate is Gate 8 on the first floor. Please wait near
                     <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
-                    <p class="script-text text-sm leading-relaxed text-gray-600">진에어에서 안내 말씀드리겠습니다. 항공기 탑승 후 보조배터리와 전자담배를 충전하거나, 기내 선반에 보관하는 것은 엄격히 금지되어 있습니다. 반드시 직접 휴대하거나 좌석 앞 주머니에 보관해 주시기 바랍니다. 감사합니다.</p>
+                    <p class="script-text text-sm leading-relaxed text-gray-600">진에어에서 항공기 안전 운항을 위해, 배터리 관련 안내 말씀드리겠습니다. 진에어 기내에서, 보조배터리를 다른 기기에 연결해 사용하거나, 보조배터리 자체를 충전시키는 것은, 모두 엄격히 금지되어 있습니다. 아울러 보조배터리를 기내 상단 선반에 보관하는 것이 금지되어 있으므로, 반드시 직접 휴대하거나 좌석 앞 주머니에 보관해주시기 바랍니다. 또한 단락 방지 및 사용 방지를 위해 절연 테이프를 부착해주시기 바랍니다. 감사합니다.</p>
                     <div class="player-controls mt-4">
                         <div class="player-buttons flex items-center space-x-2">
                             <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
@@ -590,7 +602,7 @@ Once again, the new boarding gate is Gate 8 on the first floor. Please wait near
                     <svg class="arrow-icon w-5 h-5 text-gray-500 transition-transform flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </h3>
                 <div class="broadcast-content p-4 border-t border-gray-200">
-                    <p class="script-text text-sm leading-relaxed text-gray-600">Your attention please. This is an announcement from Jin Air. Please be advised that charging a power bank or electronic cigarettes, as well as storing them in the overhead compartments, is strictly prohibited once on board. You must keep these items on your person at all times or store them in the seat pocket in front of you. Thank you for your cooperation.</p>
+                    <p class="script-text text-sm leading-relaxed text-gray-600">Your attention please. This is a safety announcement from Jin Air, regarding battery usage, onboard the aircraft. Please be advised that the use of power banks by connecting them to other devices, as well as charging the power banks themselves, is strictly prohibited onboard the aircraft. In addition, power banks must not be stored in the overhead compartments. Please ensure that you keep them on your person at all times, or place them in the seat pocket in front of you. Furthermore, to prevent short circuits and unauthorized use, we kindly ask that you apply insulating tape, to the terminals of your power banks. Thank you for your cooperation.</p>
                     <div class="player-controls mt-4">
                         <div class="player-buttons flex items-center space-x-2">
                             <button class="btn-play-pause w-20 h-8 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow flex items-center justify-center" aria-label="Play"></button>
@@ -797,9 +809,10 @@ Thank you for your understanding and patience.<div class="absolute bottom-full l
 
     <!-- Footer -->
     <footer class="text-center py-4 text-xs text-gray-500">
+        <p>https://cleo4one.github.io/lj-tag-ann</p>
         <p>Jin Air TAG Announcements</p>
         <p>Webpage creator: JeongHoon PARK(TAGKKKKZ)</p>
-        <p class="text-lg font-bold text-red-500 mt-2">Ver. 202512</p>
+        <p class="text-lg font-bold text-red-500 mt-2">Ver. 202601</p>
     </footer>
 
     <!-- Modals and Overlays -->

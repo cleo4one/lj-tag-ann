@@ -137,3 +137,42 @@ input[type="range"]::-moz-range-thumb {
 .en-translation-tooltip {
     white-space: pre-wrap; /* Allows newlines in the tooltip */
 }
+
+
+/* --- 편명 선택 박스 오로라 네온 효과 --- */
+
+/* 네온 색상이 흐르는 애니메이션 정의 */
+@keyframes aurora-neon-flow {
+    0% {
+        border-color: #39ff14; /* 네온 그린 */
+        box-shadow: 0 0 8px rgba(57, 255, 20, 0.6), inset 0 0 4px rgba(57, 255, 20, 0.3);
+    }
+    25% {
+        border-color: #00ffff; /* 사이안(청록) */
+        box-shadow: 0 0 8px rgba(0, 255, 255, 0.6), inset 0 0 4px rgba(0, 255, 255, 0.3);
+    }
+    50% {
+        border-color: #bf00ff; /* 일렉트릭 퍼플 */
+        box-shadow: 0 0 8px rgba(191, 0, 255, 0.6), inset 0 0 4px rgba(191, 0, 255, 0.3);
+    }
+    75% {
+        border-color: #ff0099; /* 네온 핑크 */
+        box-shadow: 0 0 8px rgba(255, 0, 153, 0.6), inset 0 0 4px rgba(255, 0, 153, 0.3);
+    }
+    100% {
+        border-color: #39ff14; /* 다시 그린으로 */
+        box-shadow: 0 0 8px rgba(57, 255, 20, 0.6), inset 0 0 4px rgba(57, 255, 20, 0.3);
+    }
+}
+
+/* 편명 선택 박스(#flight-select)에 애니메이션 적용 */
+#flight-select {
+    border-width: 1px !important; /* 다른 선택지와 동일한 1px 두께로 변경 */
+    animation: aurora-neon-flow 4s linear infinite; /* 4초 간격으로 무한 반복 */
+    transition: all 0.3s ease;
+}
+
+/* 마우스를 올렸을 때는 더 밝게 빛나도록 설정 */
+#flight-select:hover {
+    filter: brightness(1.2);
+}
