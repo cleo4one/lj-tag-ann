@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="JIN AIR TAG Ann.">
+  <title>JIN AIR TAG Airport Announcement Player</title>
+  <link rel="icon" href="./icon.png">
+  <link rel="apple-touch-icon" href="./icon.png">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./data/announcements.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <div id="startOverlay" class="start-overlay" role="dialog" aria-modal="true" aria-labelledby="startTitle">
+    <div class="start-card">
+      <div class="start-icon" aria-hidden="true">🔊</div>
+      <h1 id="startTitle">JIN AIR Announcement Player</h1>
+      <p>TAG Branch Operations</p>
+      <button id="btnStart" class="button button-primary button-large" type="button">▶ Start Announcement Player</button>
+      <button id="btnStartFallback" class="button button-secondary is-hidden" type="button">Continue Without Voice List</button>
+      <p id="startStatus" class="start-status" aria-live="polite">Tap Start to load the TTS voices available on this device.</p>
+    </div>
+  </div>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-top-row">
+        <div class="brand-block">
+          <strong class="brand">JIN AIR</strong>
+          <span class="branch" id="branchLabel">TAG Branch</span>
+        </div>
+        <label class="header-toggle keep-awake-toggle" for="chkKeepAwake">
+          <span class="header-toggle-label">Keep Awake</span>
+          <input id="chkKeepAwake" type="checkbox">
+          <span class="compact-switch-track" aria-hidden="true"><span class="compact-switch-thumb"></span></span>
+          <span id="wakeLockStatus" class="sr-only" aria-live="polite">Off</span>
+        </label>
+      </div>
+      <div class="quick-controls" aria-label="Flight, codeshare and destination">
+        <label class="header-toggle codeshare-toggle" for="chkCodeshare">
+          <span class="header-toggle-label">Codeshare</span>
+          <input id="chkCodeshare" type="checkbox">
+          <span class="compact-switch-track" aria-hidden="true"><span class="compact-switch-thumb"></span></span>
+        </label>
+        <div id="flightButtons" class="segmented-control flight-control" aria-label="Flight number"></div>
+        <div id="destinationButtons" class="segmented-control destination-control" aria-label="Destination"></div>
+      </div>
+    </div>
+  </header>
+
+  <div id="pullRefreshIndicator" class="pull-refresh-indicator" role="status" aria-live="polite" aria-hidden="true">
+    <span id="pullRefreshIcon" class="pull-refresh-icon" aria-hidden="true">↓</span>
+    <span id="pullRefreshText">Pull to refresh</span>
+  </div>
+
+  <main class="page-shell">
+    <section class="settings-card" aria-labelledby="settingsTitle">
+      <h2 id="settingsTitle" class="settings-title">Voice Engine Settings</h2>
+
+      <div class="settings-list">
+        <div class="settings-row voice-settings-row">
+          <label for="selVoiceKo" class="settings-label">Korean Voice</label>
+          <select id="selVoiceKo" class="control settings-control"></select>
+          <button id="btnPreviewKo" type="button" class="mini-button settings-action">Preview</button>
+        </div>
+
+        <div class="settings-row voice-settings-row">
+          <label for="selVoiceEn" class="settings-label">English Voice</label>
+          <select id="selVoiceEn" class="control settings-control"></select>
+          <button id="btnPreviewEn" type="button" class="mini-button settings-action">Preview</button>
+        </div>
+
+        <div class="settings-row slider-settings-row">
+          <label for="rngSpeed" class="settings-label">Speed</label>
+          <input type="range" id="rngSpeed" min="0.5" max="2" step="0.1" value="1" class="range-control settings-range">
+          <span id="lblSpeed" class="value-pill">1.0</span>
+          <button id="btnPreviewSpeed" type="button" class="mini-button settings-action">Preview</button>
+          <button id="btnResetSpeed" type="button" class="mini-button settings-reset">Reset</button>
+        </div>
+
+        <div class="settings-row slider-settings-row">
+          <label for="rngPitch" class="settings-label">Pitch</label>
+          <input type="range" id="rngPitch" min="0" max="2" step="0.1" value="1" class="range-control settings-range">
+          <span id="lblPitch" class="value-pill">1.0</span>
+          <button id="btnPreviewPitch" type="button" class="mini-button settings-action">Preview</button>
+          <button id="btnResetPitch" type="button" class="mini-button settings-reset">Reset</button>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="catalogTitle">
+      <div class="catalog-heading">
+        <h2 id="catalogTitle" class="eyebrow section-label">STANDARD ANNOUNCEMENTS</h2>
+        <span id="catalogCount" class="catalog-count">16 announcements</span>
+      </div>
+      <div id="annCatalog" class="announcement-list"></div>
+    </section>
+
+    <section aria-labelledby="customTitle">
+      <div class="catalog-heading">
+        <h2 id="customTitle" class="eyebrow section-label">CUSTOM ANNOUNCEMENT</h2>
+      </div>
+      <div id="customAnnouncement"></div>
+    </section>
+
+    <details class="guide-card">
+      <summary>User Guide · Operational Notes</summary>
+      <div class="guide-content">
+        <h3>Voice Settings</h3>
+        <p>Korean and English voices come from the voices exposed by your phone's browser. Available names vary by device and OS. On iPhone, Safari may expose only a limited subset of system voices to websites.</p>
+        <h3>Keep Screen Awake</h3>
+        <p>Enable “Keep Screen Awake” to prevent the display from dimming or locking while this page remains visible. This requires a supported browser and a secure HTTPS connection. The browser or operating system may temporarily release the lock, for example when the page is hidden or under certain power conditions.</p>
+        <h3>Add to Home Screen</h3>
+        <p>On iPhone/iPad, use Safari's Share menu and choose “Add to Home Screen.” When deployed over HTTPS, the app caches its core files so it can still open when the network is unreliable.</p>
+        <h3>Name Translation</h3>
+        <p>Only the “A→가” name-conversion button requires internet access and the external MyMemory translation service. The translated result is placed back into the input field so you can adjust the pronunciation before playback. Core announcement and TTS functions remain independent from the translation service.</p>
+        <h3>Progress Display</h3>
+        <p>Word highlighting and the progress bar depend on the device's Web Speech boundary-event support. Speech playback continues independently even when progress events are unavailable.</p>
+      </div>
+    </details>
+
+    <footer class="app-footer">
+      <div class="footer-topline">
+        <span>JIN AIR TAG Announcement Player</span>
+        <span id="versionLabel">Ver. —</span>
+      </div>
+      <a class="footer-link" href="https://cleo4one.github.io/lj-tag-ann" target="_blank" rel="noopener noreferrer">https://cleo4one.github.io/lj-tag-ann</a>
+      <span>Webpage creator: JeongHoon PARK(TAGKKKKZ)</span>
+    </footer>
+  </main>
+
+  <div id="alertModal" class="modal-backdrop is-hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <h2 id="modalTitle">Notice</h2>
+      <p id="modalMessage"></p>
+      <button id="modalClose" type="button" class="button button-primary">OK</button>
+    </div>
+  </div>
+
+  <noscript>
+    <div class="noscript-warning">JavaScript is required to use this page.</div>
+  </noscript>
+</body>
+</html>
