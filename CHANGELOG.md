@@ -1,11 +1,20 @@
-## 20261004.15
+# Changelog
 
-- Improved Android/Chromium progress-bar and current-word highlighting accuracy when the TTS engine does not emit reliable `boundary` events.
-- Long Android speech segments are now divided into short natural tracking chunks, primarily at sentence endings and safe word boundaries, so real TTS `start`/`end` events re-anchor progress every few seconds instead of allowing timing drift to accumulate across the full announcement.
-- Replaced raw character-count timing with a weighted speech model that treats Hangul/Latin characters, digits, spaces, commas, and sentence punctuation differently.
-- Uses completed chunk `elapsedTime`/playback duration to adapt the estimated speech speed more quickly for the selected device/voice.
-- Real browser `boundary`/`charIndex` events still override the fallback whenever available.
-- Existing 16 announcement definitions, English references, codeshare data, input rules, and UI layout are unchanged from 20261004.14.
+## 20261004.16
+
+- Prioritized Android broadcast audio quality over display-only tracking: Android tracking segmentation now occurs only at true sentence endings, never arbitrary mid-sentence word boundaries.
+- Retained the weighted/adaptive progress fallback and real `boundary` priority to keep Android highlighting reasonably accurate without choppy speech.
+- Added startup announcement-template linting and playback blocking for unknown/unresolved `{token}` placeholders.
+- Made Announcement 16 destination local to that card so paging ICN/PUS changes cannot accidentally change the global destination for later operational broadcasts.
+- Hardened MyMemory name conversion: 10-second timeout, quota/warning/status checks, and protection against writing warning text into the passenger-name field.
+- Voice selection now uses `voiceURI` when available and distinguishes duplicate same-name voices; legacy name-based saved preferences still migrate.
+- Added `kor`/`eng` locale fallback only when exact `ko`/`en` voices are absent.
+- Fixed Custom Announcement replay during the 450 ms post-finish UI window.
+- Pull-to-refresh no longer activates while speech is playing/paused and ignores gestures on form controls such as sliders, inputs, textareas, and selects.
+- Avoids unnecessary `speechSynthesis.cancel()` while idle and adds a short guard after real cancellation before starting the next utterance.
+- Repeat +/- targets are at least 24 CSS px wide.
+- Service-worker network fetches request revalidation (`cache: no-cache`) and app-shell installation uses reload semantics to reduce stale deployments.
+- Existing Korean announcement wording and English Reference scripts are unchanged.
 
 ## 20261004.14
 
@@ -37,7 +46,7 @@
 - Changed Announcement 16 UI field label from `Location` to `Proceed to`.
 - Announcement scripts, English Reference, location options, and TTS behavior are unchanged.
 
-# 20261004.10
+## 20261004.10
 
 - Rewrote all `Show English Reference` scripts as natural airport PA announcements rather than literal Korean translations.
 - Standardized common PA phraseology such as final boarding calls, passenger paging, gate-change announcements, pre-boarding invitations, and delay updates.
@@ -45,13 +54,13 @@
 - Improved English codeshare wording to `LJ044, also operating as Korean Air flight KE5768`.
 - Korean announcement templates, inputs, repetition rules, and Korean TTS behavior remain unchanged.
 
-# 20261004.9
+## 20261004.9
 
 - Increased the effective passenger-name textarea height for Announcements 2, 3, 9, and 16.
 - Name textareas now stretch to match the full height of the adjacent `Repeats` + `A→가` controls, keeping the lower edges aligned.
 - No announcement text or TTS logic changed.
 
-# 20261004.8
+## 20261004.8
 
 - Added a compact Custom Announcement `✕ Clear` action with one-step `↶ Undo`.
 - Replaced the long visible name-conversion label with `A→가` and moved it below the matching repeat control.
@@ -59,7 +68,7 @@
 - Combined Announcement 14/15 hour and minute inputs under one `Est. boarding time` label with a visual colon separator.
 - No operational announcement wording or TTS templates were changed.
 
-# 20261004.7
+## 20261004.7
 
 - Removed the duplicate `TTS SETTINGS` heading and kept a single `Voice Engine Settings` title.
 - Compressed Korean/English voice selectors and Speed/Pitch controls into one row each.
@@ -67,7 +76,7 @@
 - Redesigned repeat controls with external labels aligned to normal input labels.
 - Reduced repeat-control width so linked passenger-name/gate/time inputs receive substantially more horizontal space.
 
-# 20261004.6
+## 20261004.6
 
 - Compact codeshare label: `(KE5768)` instead of a separate `CS` line.
 - Removed card summary subtitles and voice helper text.
@@ -76,7 +85,7 @@
 - Standardized visible/PWA branding to `JIN AIR`.
 - Restored project URL and creator credit in the footer.
 
-# 20261004.5
+## 20261004.5
 
 - Moved the `Keep Awake` control into the top header next to the branch branding.
 - Changed the top-left brand label from `JINAIR` to `JIN AIR`.
@@ -86,7 +95,7 @@
 - English references also include the Korean Air codeshare flight where applicable.
 - Added a data-level `codeshares` mapping so future codeshare flights can be maintained without editing announcement templates.
 
-# 20261004.4
+## 20261004.4
 
 - Added Announcement 16: **Passenger Paging (General)**.
 - Added per-announcement ICN/PUS destination buttons synchronized with the top destination selector.
@@ -95,8 +104,6 @@
 - Added a dynamic English reference for Announcement 16.
 - Added reusable data-driven `destination` and `choice` input types for future announcements.
 - Existing Announcements 1–15 remain unchanged.
-
-# Changelog
 
 ## 20261004.3
 

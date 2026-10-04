@@ -6,7 +6,7 @@
  * English references are written as natural airport PA scripts rather than literal translations.
  */
 window.LJ_ANNOUNCEMENT_DATA = {
-  "appVersion": "20261004.15",
+  "appVersion": "20261004.16",
   "branch": "TAG Branch",
   "flights": [
     "LJ044",
@@ -499,6 +499,7 @@ window.LJ_ANNOUNCEMENT_DATA = {
           "type": "destination",
           "key": "pagingDestination",
           "label": "Destination",
+          "scope": "local",
           "required": true
         },
         {

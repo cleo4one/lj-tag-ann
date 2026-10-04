@@ -1,118 +1,64 @@
-# JIN AIR TAG Announcement Player — 20261004.15
+# JIN AIR TAG Announcement Player — 20261004.16
 
 Static mobile-first airport announcement player for the JIN AIR TAG branch.
 
-Current build: **20261004.15** with 16 standard announcements plus Custom Announcement.
-
-
-### Android progress/highlight precision
-
-On Android/Chromium, some TTS engines do not provide reliable word `boundary` events. Build 20261004.15 improves the fallback by:
-
-- splitting long same-language speech into short, natural tracking chunks at sentence endings and selected word boundaries;
-- using each chunk's real `start`/`end` events as synchronization anchors so timing error cannot accumulate across an entire announcement;
-- weighting Hangul/Latin characters, digits, spaces, and punctuation differently instead of assuming every character takes the same time;
-- calibrating the fallback speed from the actual elapsed time of completed chunks, then applying that learned speed to the next chunk; and
-- keeping real `boundary`/`charIndex` data authoritative whenever the browser supplies it.
-
-This remains an estimate when Android does not expose word timing, but it should track substantially closer than the previous whole-segment character-rate fallback.
+Current build: **20261004.16** with 16 standard announcements plus Custom Announcement.
 
 ## Files
 
 - `index.html` — application shell and English UI
 - `styles.css` — bundled local styling; no Tailwind Play CDN
-- `app.js` — rendering, TTS, translation, playback, persistence, wake lock, and UI logic
+- `app.js` — rendering, TTS, translation, playback, persistence, wake lock, pull-to-refresh, and UI logic
 - `data/announcements.js` — announcement wording and announcement-specific input rules
 - `manifest.webmanifest` — PWA metadata
 - `service-worker.js` — app-shell caching with network-first updates
 
-## Announcement content
+## Android TTS progress/highlight
 
-Operational announcement scripts remain in `data/announcements.js`. The Korean/English announcement wording is intentionally separate from the English application UI.
+Some Android/Chromium TTS engines speak normally without reliable `SpeechSynthesisUtterance.boundary` callbacks. The player therefore uses a hybrid tracker:
 
-## Pull to Refresh in Home Screen App
+- real `boundary`/`charIndex` data is authoritative whenever available;
+- when boundary data is absent, a weighted timing model estimates the current position;
+- completed speech segments calibrate the estimate for the current device/voice;
+- on Android, additional synchronization anchors are allowed **only at real sentence endings**. The app no longer splits speech at arbitrary mid-sentence word boundaries, so display tracking does not intentionally sacrifice broadcast prosody.
 
-Safari provides its own pull-to-refresh gesture in a normal browser tab. On iPhone/iPad Home Screen web apps, the app enables a custom pull-to-refresh gesture only when `navigator.standalone === true`. From the very top of the page, drag downward until `Release to refresh` appears, then release. The gesture can begin anywhere at the top of the page and does not require the TTS Start screen to have been dismissed. Detection uses both finger travel and iOS standalone rubber-band overscroll (`window.scrollY < 0`) so it does not depend on one WebKit overscroll behavior.
+Exact word-perfect highlighting cannot be guaranteed when the browser/TTS engine exposes no word timing.
 
-## Keep Screen Awake
+## Voice selection
 
-The **Keep Screen Awake** switch uses the Screen Wake Lock API. It requires browser support and a secure context (normally HTTPS). When enabled, the preference is saved locally and the app attempts to reacquire the lock when the page becomes visible again.
+Voice selection is stored by `SpeechSynthesisVoice.voiceURI` when available, so voices that share the same human-readable name can still be selected independently. Legacy name-based preferences are migrated automatically.
 
+Korean/English locale matching uses exact two-letter base tags (`ko`, `en`). If a device exposes no exact match, the app falls back to known three-letter bases (`kor`, `eng`) without reintroducing the old Konkani `kok_IN` false match.
 
-## Android Chrome TTS progress and voice filtering
+## Announcement data safety
 
-Android/Chromium TTS engines may speak normally without providing reliable word-boundary callbacks. The player therefore uses a hybrid progress strategy: real `boundary`/`charIndex` events are preferred when available, while an adaptive time-based fallback advances the progress bar and word highlight when those events are missing. The fallback pauses and resumes with playback and learns approximate timing from completed speech segments.
-
-Voice locale filtering matches the exact BCP-47 base language. Korean accepts tags such as `ko`, `ko-KR`, and `ko_KR`, but does not accept unrelated tags such as Konkani `kok_IN`.
-
-## iPhone TTS voices
-
-The app can only select voices that Safari/WebKit exposes through `speechSynthesis.getVoices()`. iPhone Safari may expose a limited subset of installed voices. The webpage cannot create or force additional native iOS voices. Adding third-party/cloud TTS would require a separate online TTS provider and a secure backend/serverless proxy for credentials.
-
-## External dependency
-
-Core UI and local device TTS do not require Tailwind, Google Fonts, or GitHub assets. The optional passenger-name translation feature uses the MyMemory web API and therefore requires internet access.
-
+Announcement templates are linted at app startup. Unknown `{token}` placeholders are logged and playback for the affected announcement is blocked. Playback also performs a final unresolved-token check before speaking.
 
 ## Announcement 16 — Passenger Paging (General)
 
-Announcement 16 supports:
+Announcement 16 has its own local ICN/PUS destination selection. It starts with the current header destination when the page is rendered, but changing the paging destination does **not** change or save the global destination used by the other announcements.
 
-- Destination buttons: ICN / PUS (synchronized with the top destination control)
-- Passenger name input with optional Convert Name to Korean
-- Independent name repeat count, default 2
-- Location buttons: CNTR / GATE / CNTR or GATE
-- Spoken Korean location mapping: 카운터 / 탑승구 / 카운터나 탑승구
-- Default location: GATE
-- Dynamic English reference
+It also provides passenger-name conversion/repetition and CNTR / GATE / CNTR or GATE location choices.
 
+## Name conversion
 
-## 20261004.5 — header and codeshare controls
+`A→가` uses the MyMemory web API and requires internet access. The app rejects quota/warning responses, times out after about 10 seconds, and never writes a MyMemory warning string into the passenger-name field.
 
-- The top-left brand now reads `JIN AIR`.
-- `Keep Awake` has moved from Voice Engine Settings into the top header.
-- A compact `Codeshare` toggle sits next to the flight selector.
-- With Codeshare enabled, LJ044 shows `(KE5768)` beneath the primary flight number. LJ046 stays unchanged because no codeshare is configured for it.
-- Korean templates that use `{flightNumber}` automatically expand LJ044 to `LJ044편, 공동운항 대한항공 KE5768편` in display text, while TTS receives pronunciation-optimized Korean.
-- English references render LJ044 as `LJ044 (Korean Air codeshare KE5768)` when the option is enabled.
-- The Codeshare preference is saved locally and remains enabled while switching flights; it only affects flights that have a configured codeshare mapping.
+## Pull to Refresh in iOS Home Screen mode
 
+Normal Safari uses Safari's native pull-to-refresh. The installed iOS Home Screen app uses a custom gesture when `navigator.standalone === true`.
 
-## 20261004.6 UI density update
+- Pull-to-refresh is disabled while an announcement is playing or paused.
+- Gestures that start on form controls such as sliders, inputs, textareas, or selects are ignored so editing/settings interactions are not intercepted.
 
-- Codeshare sub-label is shown as `(KE5768)` without the `CS` prefix.
-- Removed secondary announcement summaries and inline voice helper text.
-- Removed duplicate Standard/Custom section headings.
-- Input controls and their repeat controls are grouped into compact rows using derived announcement rules.
-- Footer now uses the official `JIN AIR` spelling and includes the project URL and original creator credit.
+## Keep Screen Awake
 
-## 20261004.7 settings and form alignment update
+The `Keep Awake` switch uses the Screen Wake Lock API and normally requires HTTPS. The preference is stored locally and the app attempts to reacquire the lock when the page becomes visible again.
 
-- Removed the duplicate `TTS SETTINGS` eyebrow; the section now uses one `Voice Engine Settings` heading.
-- Korean Voice, English Voice, Speed, and Pitch each use a compact single-row layout.
-- Announcements 5–9 now share the same boarding-category accent color.
-- Repeat controls use the same external label placement as their paired input fields.
-- Repeat controls are intentionally narrow so passenger-name, gate, floor, and time inputs receive most of the available width.
+## Offline/update behavior
 
+Core UI and local-device TTS have no Tailwind, Google Fonts, or GitHub-asset dependency. The service worker uses network-first requests with cache revalidation and an offline cache fallback. New app-shell files are installed with cache reload semantics to reduce stale deployments.
 
+## iPhone TTS voices
 
-## 20261004.9 compact input refinements
-
-- Custom Announcement now has a one-tap `✕ Clear` action with a one-step `↶ Undo` recovery.
-- Name conversion is displayed as compact `A→가` and placed under the associated repeat control.
-- Announcement 10 uses the shorter `New gate` label.
-- Announcements 14 and 15 render Hour/Minute as one `Est. boarding time` control with an `HH : MM` visual layout.
-
-## 20261004.9 passenger-name row alignment
-
-- Passenger-name textareas in Announcements 2, 3, 9, and 16 now stretch vertically to align with the adjacent `Repeats` + `A→가` stack.
-- No announcement wording, input semantics, repetition rules, or TTS behavior changed.
-
-
-## 20261004.11 English PA reference rewrite
-
-- Rewrote all available `Show English Reference` scripts in natural airport public-address English rather than line-by-line Korean translation.
-- Added an English reference to Announcement 12 (Korean power-bank safety announcement).
-- Announcement 13 remains unchanged because it is itself the operational English power-bank announcement, so a duplicate English reference is not added.
-- Codeshare wording in English references now reads naturally as `LJ044, also operating as Korean Air flight KE5768`.
-- Korean operational scripts and Korean TTS behavior are unchanged.
+The app can only select voices exposed by Safari/WebKit through `speechSynthesis.getVoices()`. The page cannot force additional native iOS voices to appear. A third-party/cloud TTS engine would require an online provider and a secure backend/serverless proxy for credentials.

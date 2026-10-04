@@ -43,7 +43,8 @@
     wakeLock: null,
     keepAwakeEnabled: false,
     codeshareEnabled: false,
-    timingUnitsPerSecond: { ko: 5.6, en: 11.5 }
+    timingUnitsPerSecond: { ko: 5.6, en: 11.5 },
+    templateErrors: new Map()
   };
 
   const els = {
@@ -260,48 +261,40 @@
   }
 
   function splitSegmentIntoTrackingChunks(segment) {
+    // Android Chrome often omits word-boundary events. For tracking we only
+    // split at real sentence endings so the spoken audio keeps natural prosody.
+    // Never split at arbitrary word/character limits: display accuracy must not
+    // make the airport announcement itself sound choppy.
     if (!IS_ANDROID || !segment?.text || segment.text.length < 24) return [segment];
 
     const text = segment.text;
     const language = segment.lang || 'ko';
     const chunks = [];
-    const softTarget = language === 'en' ? 26 : 22;
-    const hardTarget = language === 'en' ? 38 : 30;
-    const punctuationMin = language === 'en' ? 8 : 7;
     let start = 0;
 
-    while (start < text.length) {
-      let units = 0;
-      let end = start;
-      let preferredBreak = -1;
-      let hardBreak = -1;
+    for (let i = 0; i < text.length; i += 1) {
+      if (!/[.!?。！？]/.test(text[i])) continue;
 
-      for (let i = start; i < text.length; i += 1) {
-        const char = text[i];
-        units += timingWeightForChar(char, language);
-        end = i + 1;
+      let end = i + 1;
+      // Keep closing punctuation and following whitespace with the sentence.
+      while (end < text.length && /[.!?。！？]/.test(text[end])) end += 1;
+      while (end < text.length && /\s/.test(text[end])) end += 1;
 
-        if (/[.!?。！？]/.test(char) && units >= punctuationMin) {
-          preferredBreak = end;
-          break;
-        }
-        if (/[;；:：]/.test(char) && units >= softTarget * 0.82) {
-          preferredBreak = end;
-          break;
-        }
-        if (/\s/.test(char)) {
-          if (units >= softTarget) preferredBreak = end;
-          if (units >= hardTarget * 0.72) hardBreak = end;
-        }
-        if (units >= hardTarget) {
-          preferredBreak = preferredBreak > start ? preferredBreak : (hardBreak > start ? hardBreak : end);
-          break;
-        }
+      const chunkText = text.slice(start, end);
+      if (chunkText.trim()) {
+        chunks.push({
+          text: chunkText,
+          lang: language,
+          startIndex: segment.startIndex + start,
+          trackingChunk: true
+        });
       }
+      start = end;
+      i = end - 1;
+    }
 
-      let chunkEnd = preferredBreak > start ? preferredBreak : end;
-      if (chunkEnd <= start) chunkEnd = Math.min(text.length, start + 1);
-      const chunkText = text.slice(start, chunkEnd);
+    if (start < text.length) {
+      const chunkText = text.slice(start);
       if (chunkText) {
         chunks.push({
           text: chunkText,
@@ -310,10 +303,9 @@
           trackingChunk: true
         });
       }
-      start = chunkEnd;
     }
 
-    return chunks.length ? chunks : [segment];
+    return chunks.length > 1 ? chunks : [segment];
   }
 
   function refineSegmentsForTracking(segments) {
@@ -339,6 +331,49 @@
     });
   }
 
+  function unresolvedTemplateTokens(text) {
+    return [...String(text || '').matchAll(/\{([A-Za-z0-9_]+)\}/g)].map(match => match[1]);
+  }
+
+  function lintAnnouncementTemplates() {
+    const builtIns = new Set(['flightNumber', 'destination']);
+    const warnings = [];
+    state.templateErrors.clear();
+
+    DATA.announcements.forEach(ann => {
+      const allowed = new Set(builtIns);
+      const annWarnings = [];
+      (ann.inputs || []).forEach(spec => {
+        allowed.add(spec.key);
+        if (spec.type === 'destination' || spec.type === 'choice') {
+          allowed.add(`${spec.key}Ko`);
+          allowed.add(`${spec.key}En`);
+          allowed.add(`${spec.key}Label`);
+        }
+      });
+      (ann.derived || []).forEach(rule => allowed.add(rule.key));
+
+      const inspect = (label, template) => {
+        if (!template) return;
+        unresolvedTemplateTokens(template).forEach(token => {
+          if (!allowed.has(token)) {
+            const message = `#${ann.id} ${label}: unknown token {${token}}`;
+            warnings.push(message);
+            annWarnings.push(message);
+          }
+        });
+      };
+
+      inspect('template', ann.template);
+      inspect('englishTemplate', ann.englishTemplate);
+      (ann.derived || []).forEach((rule, index) => inspect(`derived[${index}]`, rule.template));
+      if (annWarnings.length) state.templateErrors.set(String(ann.id), annWarnings);
+    });
+
+    if (warnings.length) console.error('Announcement template validation failed\n' + warnings.join('\n'));
+    return warnings;
+  }
+
   function getAnnouncementById(id) {
     return DATA.announcements.find(a => a.id === String(id));
   }
@@ -352,6 +387,7 @@
 
   function syncDestinationInputs() {
     document.querySelectorAll('[data-input-type="destination"]').forEach(control => {
+      if (control.dataset.inputScope === 'local') return;
       control.dataset.value = state.currentDest;
       control.querySelectorAll('button[data-choice-value]').forEach(button => {
         const active = button.dataset.choiceValue === state.currentDest;
@@ -455,6 +491,7 @@
       const control = createEl('div', 'choice-control');
       control.dataset.inputKey = spec.key;
       control.dataset.inputType = spec.type;
+      control.dataset.inputScope = spec.scope || 'global';
 
       const options = spec.type === 'destination'
         ? Object.entries(DATA.destinations).map(([value, dest]) => ({ value, label: dest.label, ko: dest.ko, en: dest.en }))
@@ -473,13 +510,17 @@
         });
 
         if (spec.type === 'destination') {
-          if (state.currentDest !== value) {
-            stopSpeech();
-            state.currentDest = value;
-            storageSet(STORAGE.destination, value);
-            renderQuickControls();
+          if (spec.scope === 'local') {
+            updateCardPreview(card, ann);
+          } else {
+            if (state.currentDest !== value) {
+              stopSpeech();
+              state.currentDest = value;
+              storageSet(STORAGE.destination, value);
+              renderQuickControls();
+            }
+            refreshAllPreviews();
           }
-          refreshAllPreviews();
         } else {
           updateCardPreview(card, ann);
         }
@@ -931,10 +972,7 @@
       textarea.focus();
     });
     play.addEventListener('click', () => {
-      if (state.active?.card === card) {
-        togglePauseResume(card);
-        return;
-      }
+      if (state.active?.card === card && togglePauseResume(card)) return;
       const text = textarea.value.trim();
       if (!text) {
         showValidation(card, 'Enter the announcement text.');
@@ -983,24 +1021,44 @@
     }
 
     const original = button.textContent;
+    const controller = typeof AbortController === 'function' ? new AbortController() : null;
+    const timeoutId = window.setTimeout(() => controller?.abort(), 10000);
     button.disabled = true;
     button.textContent = '…';
     try {
       const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(query)}&langpair=en|ko`;
-      const response = await fetch(url, { method: 'GET', referrerPolicy: 'no-referrer' });
+      const response = await fetch(url, {
+        method: 'GET',
+        referrerPolicy: 'no-referrer',
+        signal: controller?.signal
+      });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const result = await response.json();
-      const translated = result?.responseData?.translatedText;
+      const status = Number(result?.responseStatus ?? 200);
+      const details = String(result?.responseDetails || '');
+      const translated = String(result?.responseData?.translatedText || '').trim();
+      const warningText = `${translated} ${details}`.toLowerCase();
+      if (result?.quotaFinished === true || status >= 400 || warningText.includes('mymemory warning') || warningText.includes('quota')) {
+        throw new Error('Translation quota is unavailable or exhausted');
+      }
       if (!translated) throw new Error('No translation result');
       const decoder = document.createElement('textarea');
       decoder.innerHTML = translated;
-      input.value = decoder.value;
-      translationCache.set(query, decoder.value);
+      const decoded = decoder.value.trim();
+      if (!decoded || decoded.toLowerCase().includes('mymemory warning')) {
+        throw new Error('Translation service returned a warning instead of a name');
+      }
+      input.value = decoded;
+      translationCache.set(query, decoded);
       updateCardPreview(card, ann);
     } catch (error) {
       console.error('Translation failed:', error);
-      showModal(`Name translation failed.\n(${error.message})\nEnter the Korean pronunciation manually.`);
+      const message = error?.name === 'AbortError'
+        ? 'Name translation timed out after 10 seconds.'
+        : `Name translation failed.\n(${error.message})`;
+      showModal(`${message}\nEnter the Korean pronunciation manually.`);
     } finally {
+      window.clearTimeout(timeoutId);
       button.disabled = false;
       button.textContent = original;
     }
@@ -1042,10 +1100,24 @@
     return Boolean(base) && (tag === base || tag.startsWith(`${base}-`));
   }
 
+  function voiceMatchesFallbackLanguage(voice, language) {
+    const tag = normalizeLanguageTag(voice?.lang);
+    const base = tag.split('-')[0];
+    if (language === 'ko') return base === 'kor';
+    if (language === 'en') return base === 'eng';
+    return false;
+  }
+
+  function voiceKey(voice) {
+    if (!voice) return '';
+    return voice.voiceURI || `${voice.name}|${voice.lang}`;
+  }
+
   function selectedVoice(language) {
     const select = language === 'en' ? els.selVoiceEn : els.selVoiceKo;
     if (!select.value) return null;
-    return state.voices.find(v => v.name === select.value && voiceMatchesLanguage(v, language))
+    return state.voices.find(v => voiceKey(v) === select.value)
+      || state.voices.find(v => v.name === select.value && (voiceMatchesLanguage(v, language) || voiceMatchesFallbackLanguage(v, language)))
       || state.voices.find(v => v.name === select.value)
       || null;
   }
@@ -1118,7 +1190,7 @@
     const max = segment.lang === 'en' ? 24 : 11;
     const clamped = Math.min(max, Math.max(min, baseUps));
     const previous = state.timingUnitsPerSecond[segment.lang] || clamped;
-    // Frequent Android tracking chunks let us adapt quickly without overreacting to one clause.
+    // Sentence-level Android anchors adapt without sacrificing natural mid-sentence prosody.
     state.timingUnitsPerSecond[segment.lang] = (previous * 0.45) + (clamped * 0.55);
   }
 
@@ -1127,7 +1199,8 @@
       showModal('Web Speech API is not available in this browser. Try the latest Safari or a Chromium-based browser.');
       return;
     }
-    stopSpeech();
+    const needsCancel = Boolean(state.active || synth.speaking || synth.pending || synth.paused);
+    if (needsCancel) stopSpeech();
     state.playbackId += 1;
     const id = state.playbackId;
     const script = card.querySelector('[data-role="script"]');
@@ -1144,7 +1217,11 @@
     };
     progress.style.width = '0%';
     playButton.textContent = '❚❚ Pause';
-    speakNextSegment(id);
+    const start = () => {
+      if (state.active?.id === id) speakNextSegment(id);
+    };
+    if (needsCancel) window.setTimeout(start, 60);
+    else start();
   }
 
   function speakNextSegment(id) {
@@ -1207,7 +1284,7 @@
       const segmentEnd = segment.startIndex + segment.text.length;
       updateHighlight(current, Math.max(0, segmentEnd - 1));
       current.segmentIndex += 1;
-      window.setTimeout(() => speakNextSegment(id), 0);
+      speakNextSegment(id);
     };
 
     utterance.onerror = event => {
@@ -1296,6 +1373,11 @@
 
   function playAnnouncement(card, ann) {
     if (state.active?.card === card && togglePauseResume(card)) return;
+    if (state.templateErrors.has(String(ann.id))) {
+      const firstError = state.templateErrors.get(String(ann.id))[0];
+      showValidation(card, `Announcement data error. Playback was blocked. (${firstError})`);
+      return;
+    }
     const validation = validateAnnouncement(card, ann);
     if (!validation.ok) {
       showValidation(card, validation.message);
@@ -1307,10 +1389,16 @@
       showValidation(card, 'The announcement could not be generated. Check the input values.');
       return;
     }
+    const unresolved = unresolvedTemplateTokens(text);
+    if (unresolved.length) {
+      console.error(`Announcement #${ann.id} contains unresolved template token(s):`, unresolved);
+      showValidation(card, `Announcement data error: unresolved {${unresolved[0]}}. Playback was blocked.`);
+      return;
+    }
     beginPlayback(card, text, ann.language || 'auto');
   }
 
-  function populateVoiceSelect(select, voices, savedName, fallbackLabel) {
+  function populateVoiceSelect(select, voices, savedValue, fallbackLabel) {
     select.replaceChildren();
     if (!voices.length) {
       const option = document.createElement('option');
@@ -1319,13 +1407,27 @@
       select.appendChild(option);
       return;
     }
+    const duplicateTotals = new Map();
+    voices.forEach(voice => {
+      const labelKey = `${voice.name}|${voice.lang}`;
+      duplicateTotals.set(labelKey, (duplicateTotals.get(labelKey) || 0) + 1);
+    });
+    const duplicateIndex = new Map();
     voices.forEach(voice => {
       const option = document.createElement('option');
-      option.value = voice.name;
-      option.textContent = `${voice.name} (${voice.lang})`;
+      option.value = voiceKey(voice);
+      const labelKey = `${voice.name}|${voice.lang}`;
+      const total = duplicateTotals.get(labelKey) || 1;
+      const nextIndex = (duplicateIndex.get(labelKey) || 0) + 1;
+      duplicateIndex.set(labelKey, nextIndex);
+      option.textContent = `${voice.name} (${voice.lang})${total > 1 ? ` · ${nextIndex}` : ''}`;
       select.appendChild(option);
     });
-    if (savedName && voices.some(v => v.name === savedName)) select.value = savedName;
+    if (!savedValue) return;
+    const byKey = voices.find(v => voiceKey(v) === savedValue);
+    const byLegacyName = voices.find(v => v.name === savedValue);
+    const match = byKey || byLegacyName;
+    if (match) select.value = voiceKey(match);
   }
 
   function refreshVoices() {
@@ -1340,8 +1442,10 @@
       })
       .sort((a, b) => a.name.localeCompare(b.name));
 
-    const ko = state.voices.filter(v => voiceMatchesLanguage(v, 'ko'));
-    const en = state.voices.filter(v => voiceMatchesLanguage(v, 'en'));
+    let ko = state.voices.filter(v => voiceMatchesLanguage(v, 'ko'));
+    let en = state.voices.filter(v => voiceMatchesLanguage(v, 'en'));
+    if (!ko.length) ko = state.voices.filter(v => voiceMatchesFallbackLanguage(v, 'ko'));
+    if (!en.length) en = state.voices.filter(v => voiceMatchesFallbackLanguage(v, 'en'));
     const koSaved = readPreference(STORAGE.koVoice, LEGACY_STORAGE.koVoice, '');
     const enSaved = readPreference(STORAGE.enVoice, LEGACY_STORAGE.enVoice, '');
     const currentKo = els.selVoiceKo.value || koSaved;
@@ -1642,8 +1746,12 @@
       if (!refreshing) renderPullState();
     };
 
+    const startsOnProtectedControl = event => Boolean(event.target?.closest?.('input, textarea, select, [contenteditable="true"]'));
+    const playbackBlocksRefresh = () => Boolean(state.active && (state.active.status === 'playing' || state.active.status === 'paused'));
+
     const beginTracking = event => {
       if (refreshing || event.touches.length !== 1) return;
+      if (playbackBlocksRefresh() || startsOnProtectedControl(event)) return;
       if (!pageIsAtTop()) return;
 
       tracking = true;
@@ -1658,6 +1766,10 @@
 
     const moveTracking = event => {
       if (refreshing || event.touches.length !== 1) return;
+      if (playbackBlocksRefresh() || startsOnProtectedControl(event)) {
+        if (tracking) resetPull();
+        return;
+      }
 
       // iOS can begin the overscroll before our first useful touchstart reaches
       // the page. If that happens, start tracking lazily during touchmove.
@@ -1688,6 +1800,10 @@
 
     const finishPull = () => {
       if (!tracking || refreshing) return;
+      if (playbackBlocksRefresh()) {
+        resetPull();
+        return;
+      }
       const shouldRefresh = armed || nativeOverscrollDistance() >= triggerDistance;
 
       if (!shouldRefresh) {
@@ -1755,6 +1871,7 @@
 
   function init() {
     preventPageZoom();
+    lintAnnouncementTemplates();
     initStandalonePullToRefresh();
     initPreferences();
     initSettings();
