@@ -1,5 +1,11 @@
 # Changelog
 
+## 20261005.1
+
+- Updated Announcement 4 Korean script to remove the terminal-fee instruction and use the revised immigration/security wording provided by the operator.
+- Updated Announcement 4 English Reference to match the revised operational meaning.
+- No other announcement scripts, inputs, repeat rules, or TTS behavior changed.
+
 ## 20261004.17
 
 - Gate-number pronunciation is now deterministic in Korean TTS: numeric counters such as `7번` are converted only for speech to `칠 번` (and similarly `1번` → `일 번`, `8번` → `팔 번`, `10번` → `십 번`).

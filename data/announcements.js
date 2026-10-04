@@ -6,7 +6,7 @@
  * English references are written as natural airport PA scripts rather than literal translations.
  */
 window.LJ_ANNOUNCEMENT_DATA = {
-  "appVersion": "20261004.17",
+  "appVersion": "20261005.1",
   "branch": "TAG Branch",
   "flights": [
     "LJ044",
@@ -121,8 +121,8 @@ window.LJ_ANNOUNCEMENT_DATA = {
       "title": "Congested, please proceed to IMMG now",
       "summary": "Proceed to immigration",
       "language": "auto",
-      "template": "진에어에서 출국 심사대 진입 안내 말씀 드리겠습니다. 공항이 혼잡하오니, 진에어 손님 여러분들께서는 탑승에 문제 없도록, 공항세를 납부하신 후 보안 검색대 및 출국 심사대로 바로 진입해주시기 바랍니다. 감사합니다.",
-      "englishTemplate": "Attention, Jin Air passengers. Due to congestion in the terminal, please proceed to security screening and immigration as soon as you have paid the terminal fee. Please allow sufficient time to complete all departure formalities and reach your boarding gate. Thank you for your cooperation."
+      "template": "진에어에서 출국 심사대 진입 안내 말씀 드리겠습니다. 공항이 혼잡하오니, 진에어 손님 여러분들께서는 탑승에 문제 없도록, 보안 검색대 및 출국 심사대로 바로 진입해주시기 바랍니다. 감사합니다.",
+      "englishTemplate": "Attention, Jin Air passengers. Due to congestion in the terminal, please proceed directly to security screening and immigration to ensure sufficient time for boarding. Please complete your departure formalities without delay. Thank you for your cooperation."
     },
     {
       "id": "5",

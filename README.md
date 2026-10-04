@@ -1,8 +1,8 @@
-# JIN AIR TAG Announcement Player — 20261004.17
+# JIN AIR TAG Announcement Player — 20261005.1
 
 Static mobile-first airport announcement player for the JIN AIR TAG branch.
 
-Current build: **20261004.17** with 16 standard announcements plus Custom Announcement.
+Current build: **20261005.1** with 16 standard announcements plus Custom Announcement.
 
 Gate numbers are spoken with deterministic Sino-Korean numerals for Korean TTS (for example, `7번` is spoken as `칠 번`) while the on-screen script remains numeric.
 
