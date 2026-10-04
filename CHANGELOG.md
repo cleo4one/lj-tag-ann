@@ -1,5 +1,12 @@
 # Changelog
 
+## 20261004.17
+
+- Gate-number pronunciation is now deterministic in Korean TTS: numeric counters such as `7번` are converted only for speech to `칠 번` (and similarly `1번` → `일 번`, `8번` → `팔 번`, `10번` → `십 번`).
+- The visible announcement text remains numeric (`7번`), while the speech string uses the explicit Sino-Korean reading.
+- This also covers hard-coded gate references such as Gate 7 in Announcement 11, preventing Android TTS from choosing context-dependent native-Korean readings such as `일곱 번`.
+
+
 ## 20261004.16
 
 - Prioritized Android broadcast audio quality over display-only tracking: Android tracking segmentation now occurs only at true sentence endings, never arbitrary mid-sentence word boundaries.

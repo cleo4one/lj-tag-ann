@@ -115,6 +115,33 @@
     return Number.isFinite(n) ? String(n) : '';
   }
 
+  function formatSinoKoreanNumber(value) {
+    const n = Number.parseInt(String(value), 10);
+    if (!Number.isFinite(n) || n < 0 || n > 9999) return String(value);
+    if (n === 0) return '영';
+
+    const digits = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
+    const units = ['', '십', '백', '천'];
+    const chars = String(n).split('').map(Number);
+    let result = '';
+    chars.forEach((digit, index) => {
+      if (digit === 0) return;
+      const unitIndex = chars.length - index - 1;
+      if (!(digit === 1 && unitIndex > 0)) result += digits[digit];
+      result += units[unitIndex] || '';
+    });
+    return result || String(value);
+  }
+
+  function normalizeKoreanCounterPronunciation(text) {
+    // Do not let the device TTS guess whether a gate such as 7번 should be
+    // native-Korean (일곱 번) or Sino-Korean (칠 번). Airport gate numbers
+    // are read with Sino-Korean numerals, consistently across announcements.
+    return String(text || '').replace(/(\d{1,4})\s*번/g, (_, digits) => {
+      return `${formatSinoKoreanNumber(digits)} 번`;
+    });
+  }
+
   function formatFlightNumberForReading(flightNumber) {
     if (!flightNumber) return '';
     const alphaMap = {
@@ -325,10 +352,13 @@
       flightNumber: flightNumberForTemplate(mode, language),
       destination: currentDestination(language)
     };
-    return template.replace(/\{([A-Za-z0-9_]+)\}/g, (match, key) => {
+    const rendered = template.replace(/\{([A-Za-z0-9_]+)\}/g, (match, key) => {
       const value = base[key];
       return value === undefined || value === null ? match : String(value);
     });
+    return mode === 'speech' && language === 'ko'
+      ? normalizeKoreanCounterPronunciation(rendered)
+      : rendered;
   }
 
   function unresolvedTemplateTokens(text) {
