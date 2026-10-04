@@ -1,8 +1,21 @@
-# JIN AIR TAG Announcement Player — 20261004.13
+# JIN AIR TAG Announcement Player — 20261004.15
 
 Static mobile-first airport announcement player for the JIN AIR TAG branch.
 
-Current build: **20261004.13** with 16 standard announcements plus Custom Announcement.
+Current build: **20261004.15** with 16 standard announcements plus Custom Announcement.
+
+
+### Android progress/highlight precision
+
+On Android/Chromium, some TTS engines do not provide reliable word `boundary` events. Build 20261004.15 improves the fallback by:
+
+- splitting long same-language speech into short, natural tracking chunks at sentence endings and selected word boundaries;
+- using each chunk's real `start`/`end` events as synchronization anchors so timing error cannot accumulate across an entire announcement;
+- weighting Hangul/Latin characters, digits, spaces, and punctuation differently instead of assuming every character takes the same time;
+- calibrating the fallback speed from the actual elapsed time of completed chunks, then applying that learned speed to the next chunk; and
+- keeping real `boundary`/`charIndex` data authoritative whenever the browser supplies it.
+
+This remains an estimate when Android does not expose word timing, but it should track substantially closer than the previous whole-segment character-rate fallback.
 
 ## Files
 
@@ -24,6 +37,13 @@ Safari provides its own pull-to-refresh gesture in a normal browser tab. On iPho
 ## Keep Screen Awake
 
 The **Keep Screen Awake** switch uses the Screen Wake Lock API. It requires browser support and a secure context (normally HTTPS). When enabled, the preference is saved locally and the app attempts to reacquire the lock when the page becomes visible again.
+
+
+## Android Chrome TTS progress and voice filtering
+
+Android/Chromium TTS engines may speak normally without providing reliable word-boundary callbacks. The player therefore uses a hybrid progress strategy: real `boundary`/`charIndex` events are preferred when available, while an adaptive time-based fallback advances the progress bar and word highlight when those events are missing. The fallback pauses and resumes with playback and learns approximate timing from completed speech segments.
+
+Voice locale filtering matches the exact BCP-47 base language. Korean accepts tags such as `ko`, `ko-KR`, and `ko_KR`, but does not accept unrelated tags such as Konkani `kok_IN`.
 
 ## iPhone TTS voices
 

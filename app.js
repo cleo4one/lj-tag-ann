@@ -42,7 +42,8 @@
     playbackId: 0,
     wakeLock: null,
     keepAwakeEnabled: false,
-    codeshareEnabled: false
+    codeshareEnabled: false,
+    timingUnitsPerSecond: { ko: 5.6, en: 11.5 }
   };
 
   const els = {
@@ -212,6 +213,112 @@
 
     push();
     return segments;
+  }
+
+
+  const IS_ANDROID = /Android/i.test(navigator.userAgent || '');
+
+  function timingWeightForChar(char, language = 'ko') {
+    if (!char) return 0;
+    if (/\s/.test(char)) return 0.16;
+    if (/[.!?。！？]/.test(char)) return language === 'ko' ? 2.3 : 2.0;
+    if (/[,，]/.test(char)) return language === 'ko' ? 1.25 : 1.05;
+    if (/[;；:：]/.test(char)) return 1.45;
+    if (/[\-–—/()\[\]{}]/.test(char)) return 0.38;
+    if (/\d/.test(char)) return language === 'ko' ? 1.05 : 0.72;
+    if (language === 'en' && /[A-Za-zÀ-ÖØ-öø-ÿĀ-ž]/.test(char)) return 0.72;
+    return 1;
+  }
+
+  function timingWeight(text, language = 'ko') {
+    let total = 0;
+    for (const char of String(text || '')) total += timingWeightForChar(char, language);
+    return Math.max(0.01, total);
+  }
+
+  function buildTimingMap(text, language = 'ko') {
+    const cumulative = [0];
+    let total = 0;
+    for (const char of String(text || '')) {
+      total += timingWeightForChar(char, language);
+      cumulative.push(total);
+    }
+    return { cumulative, total: Math.max(0.01, total) };
+  }
+
+  function charOffsetForTimingUnits(map, units) {
+    if (!map?.cumulative?.length) return 0;
+    const target = Math.max(0, Math.min(map.total, units));
+    let low = 0;
+    let high = map.cumulative.length - 1;
+    while (low < high) {
+      const mid = Math.floor((low + high) / 2);
+      if (map.cumulative[mid] < target) low = mid + 1;
+      else high = mid;
+    }
+    return Math.max(0, Math.min(map.cumulative.length - 2, low));
+  }
+
+  function splitSegmentIntoTrackingChunks(segment) {
+    if (!IS_ANDROID || !segment?.text || segment.text.length < 24) return [segment];
+
+    const text = segment.text;
+    const language = segment.lang || 'ko';
+    const chunks = [];
+    const softTarget = language === 'en' ? 26 : 22;
+    const hardTarget = language === 'en' ? 38 : 30;
+    const punctuationMin = language === 'en' ? 8 : 7;
+    let start = 0;
+
+    while (start < text.length) {
+      let units = 0;
+      let end = start;
+      let preferredBreak = -1;
+      let hardBreak = -1;
+
+      for (let i = start; i < text.length; i += 1) {
+        const char = text[i];
+        units += timingWeightForChar(char, language);
+        end = i + 1;
+
+        if (/[.!?。！？]/.test(char) && units >= punctuationMin) {
+          preferredBreak = end;
+          break;
+        }
+        if (/[;；:：]/.test(char) && units >= softTarget * 0.82) {
+          preferredBreak = end;
+          break;
+        }
+        if (/\s/.test(char)) {
+          if (units >= softTarget) preferredBreak = end;
+          if (units >= hardTarget * 0.72) hardBreak = end;
+        }
+        if (units >= hardTarget) {
+          preferredBreak = preferredBreak > start ? preferredBreak : (hardBreak > start ? hardBreak : end);
+          break;
+        }
+      }
+
+      let chunkEnd = preferredBreak > start ? preferredBreak : end;
+      if (chunkEnd <= start) chunkEnd = Math.min(text.length, start + 1);
+      const chunkText = text.slice(start, chunkEnd);
+      if (chunkText) {
+        chunks.push({
+          text: chunkText,
+          lang: language,
+          startIndex: segment.startIndex + start,
+          trackingChunk: true
+        });
+      }
+      start = chunkEnd;
+    }
+
+    return chunks.length ? chunks : [segment];
+  }
+
+  function refineSegmentsForTracking(segments) {
+    if (!IS_ANDROID) return segments;
+    return segments.flatMap(splitSegmentIntoTrackingChunks);
   }
 
   function currentDestination(language = 'ko') {
@@ -925,12 +1032,94 @@
     active.progress.style.width = `${pct}%`;
   }
 
+  function normalizeLanguageTag(lang) {
+    return String(lang || '').trim().replace(/_/g, '-').toLowerCase();
+  }
+
+  function voiceMatchesLanguage(voice, language) {
+    const tag = normalizeLanguageTag(voice?.lang);
+    const base = normalizeLanguageTag(language).split('-')[0];
+    return Boolean(base) && (tag === base || tag.startsWith(`${base}-`));
+  }
+
   function selectedVoice(language) {
     const select = language === 'en' ? els.selVoiceEn : els.selVoiceKo;
     if (!select.value) return null;
-    return state.voices.find(v => v.name === select.value && v.lang.toLowerCase().startsWith(language))
+    return state.voices.find(v => v.name === select.value && voiceMatchesLanguage(v, language))
       || state.voices.find(v => v.name === select.value)
       || null;
+  }
+
+  function stopProgressTracker(active = state.active) {
+    const tracker = active?.progressTracker;
+    if (!tracker) return;
+    if (tracker.rafId) window.cancelAnimationFrame(tracker.rafId);
+    active.progressTracker = null;
+  }
+
+  function startProgressTracker(active, segment, rate) {
+    stopProgressTracker(active);
+    const now = performance.now();
+    const timingMap = buildTimingMap(segment.text, segment.lang);
+    const tracker = {
+      segmentIndex: active.segmentIndex,
+      cursor: segment.startIndex,
+      fallbackUnits: 0,
+      timingMap,
+      elapsedMs: 0,
+      lastFrameAt: now,
+      lastBoundaryAt: 0,
+      boundaryCount: 0,
+      rate: Math.max(0.1, Number(rate) || 1),
+      rafId: 0
+    };
+    active.progressTracker = tracker;
+
+    const frame = timestamp => {
+      const current = state.active;
+      if (!current || current.id !== active.id || current.progressTracker !== tracker) return;
+      const delta = Math.max(0, Math.min(250, timestamp - tracker.lastFrameAt));
+      tracker.lastFrameAt = timestamp;
+
+      if (current.status === 'playing') {
+        tracker.elapsedMs += delta;
+        const noRecentBoundary = tracker.lastBoundaryAt === 0
+          ? tracker.elapsedMs >= 220
+          : timestamp - tracker.lastBoundaryAt >= 420;
+
+        if (noRecentBoundary) {
+          const baseUps = state.timingUnitsPerSecond[segment.lang] || (segment.lang === 'en' ? 11.5 : 5.6);
+          tracker.fallbackUnits += (baseUps * tracker.rate * delta) / 1000;
+          const localOffset = charOffsetForTimingUnits(tracker.timingMap, tracker.fallbackUnits);
+          const segmentLastIndex = Math.max(segment.startIndex, segment.startIndex + segment.text.length - 1);
+          const nextIndex = Math.min(segmentLastIndex, segment.startIndex + localOffset);
+          if (nextIndex > tracker.cursor) {
+            tracker.cursor = nextIndex;
+            updateHighlight(current, tracker.cursor);
+          }
+        }
+      }
+
+      tracker.rafId = window.requestAnimationFrame(frame);
+    };
+
+    tracker.rafId = window.requestAnimationFrame(frame);
+    return tracker;
+  }
+
+  function learnSegmentTiming(segment, tracker, reportedElapsedMs = 0) {
+    if (!segment || !tracker || !segment.text) return;
+    const elapsedMs = reportedElapsedMs >= 250 ? reportedElapsedMs : tracker.elapsedMs;
+    if (elapsedMs < 250) return;
+    const totalUnits = tracker.timingMap?.total || timingWeight(segment.text, segment.lang);
+    const observedUps = totalUnits / (elapsedMs / 1000);
+    const baseUps = observedUps / Math.max(0.1, tracker.rate || 1);
+    const min = segment.lang === 'en' ? 4.5 : 2.5;
+    const max = segment.lang === 'en' ? 24 : 11;
+    const clamped = Math.min(max, Math.max(min, baseUps));
+    const previous = state.timingUnitsPerSecond[segment.lang] || clamped;
+    // Frequent Android tracking chunks let us adapt quickly without overreacting to one clause.
+    state.timingUnitsPerSecond[segment.lang] = (previous * 0.45) + (clamped * 0.55);
   }
 
   function beginPlayback(card, text, forcedLanguage = 'auto') {
@@ -944,13 +1133,14 @@
     const script = card.querySelector('[data-role="script"]');
     const progress = card.querySelector('.progress-fill');
     const playButton = card.querySelector('[data-role="play"]');
-    const segments = parseTextToSegments(text, forcedLanguage);
+    const segments = refineSegmentsForTracking(parseTextToSegments(text, forcedLanguage));
     const tokens = renderHighlightText(script, text);
 
     state.active = {
       id, card, text, script, progress, playButton, segments, tokens,
       segmentIndex: 0,
-      status: 'playing'
+      status: 'playing',
+      progressTracker: null
     };
     progress.style.width = '0%';
     playButton.textContent = '❚❚ Pause';
@@ -965,7 +1155,8 @@
       return;
     }
 
-    const segment = active.segments[active.segmentIndex];
+    const segmentIndex = active.segmentIndex;
+    const segment = active.segments[segmentIndex];
     const utterance = new SpeechSynthesisUtterance(segment.text);
     utterance.rate = Number.parseFloat(els.rngSpeed.value) || 1;
     utterance.pitch = Number.parseFloat(els.rngPitch.value) || 1;
@@ -973,20 +1164,50 @@
     const voice = selectedVoice(segment.lang);
     if (voice) utterance.voice = voice;
 
+    const ensureProgressTracker = () => {
+      const current = state.active;
+      if (!current || current.id !== id || current.segmentIndex !== segmentIndex) return;
+      if (!current.progressTracker) startProgressTracker(current, segment, utterance.rate);
+    };
+
+    utterance.onstart = ensureProgressTracker;
+
     utterance.onboundary = event => {
       const current = state.active;
       if (!current || current.id !== id || typeof event.charIndex !== 'number') return;
       const globalIndex = segment.startIndex + event.charIndex;
-      updateHighlight(current, globalIndex);
+      const tracker = current.progressTracker;
+      if (tracker) {
+        tracker.lastBoundaryAt = performance.now();
+        tracker.boundaryCount += 1;
+        tracker.cursor = Math.max(tracker.cursor, globalIndex);
+        const localBoundary = Math.max(0, Math.min(segment.text.length, event.charIndex));
+        tracker.fallbackUnits = Math.max(
+          tracker.fallbackUnits,
+          tracker.timingMap?.cumulative?.[localBoundary] || 0
+        );
+        updateHighlight(current, tracker.cursor);
+      } else {
+        updateHighlight(current, globalIndex);
+      }
     };
 
-    utterance.onend = () => {
+    utterance.onend = event => {
       const current = state.active;
       if (!current || current.id !== id) return;
+      const tracker = current.progressTracker;
+      if (tracker) {
+        const reportedElapsed = Number(event?.elapsedTime);
+        const elapsedMs = Number.isFinite(reportedElapsed) && reportedElapsed > 0
+          ? (reportedElapsed > 120 ? reportedElapsed : reportedElapsed * 1000)
+          : 0;
+        learnSegmentTiming(segment, tracker, elapsedMs);
+      }
+      stopProgressTracker(current);
       const segmentEnd = segment.startIndex + segment.text.length;
       updateHighlight(current, Math.max(0, segmentEnd - 1));
       current.segmentIndex += 1;
-      window.setTimeout(() => speakNextSegment(id), 10);
+      window.setTimeout(() => speakNextSegment(id), 0);
     };
 
     utterance.onerror = event => {
@@ -1000,6 +1221,9 @@
 
     try {
       synth.speak(utterance);
+      // Some Android/Google TTS combinations omit start/boundary events.
+      // If start is not reported, begin the approximate tracker shortly after speak().
+      window.setTimeout(ensureProgressTracker, 500);
     } catch (error) {
       console.error(error);
       showModal('Speech playback could not start. Check the device TTS settings.');
@@ -1010,6 +1234,7 @@
   function finishPlayback(id) {
     const active = state.active;
     if (!active || active.id !== id) return;
+    stopProgressTracker(active);
     active.progress.style.width = '100%';
     active.playButton.textContent = '▶ Play';
     active.status = 'finished';
@@ -1043,6 +1268,7 @@
   function stopSpeech() {
     state.playbackId += 1;
     const activeCard = state.active?.card || null;
+    if (state.active) stopProgressTracker(state.active);
     state.active = null;
     if (hasSpeech) {
       try { synth.cancel(); } catch (_) { /* noop */ }
@@ -1114,8 +1340,8 @@
       })
       .sort((a, b) => a.name.localeCompare(b.name));
 
-    const ko = state.voices.filter(v => v.lang.toLowerCase().startsWith('ko'));
-    const en = state.voices.filter(v => v.lang.toLowerCase().startsWith('en'));
+    const ko = state.voices.filter(v => voiceMatchesLanguage(v, 'ko'));
+    const en = state.voices.filter(v => voiceMatchesLanguage(v, 'en'));
     const koSaved = readPreference(STORAGE.koVoice, LEGACY_STORAGE.koVoice, '');
     const enSaved = readPreference(STORAGE.enVoice, LEGACY_STORAGE.enVoice, '');
     const currentKo = els.selVoiceKo.value || koSaved;
